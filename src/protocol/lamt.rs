@@ -334,11 +334,15 @@ impl Topic {
     }
 
     pub fn raw_id(&self) -> Vec<u8> {
-        Vec::from(Self::u32_be_slice_as(self.id))
+        Vec::from(Self::u32_be_as_slice(self.id))
     }
 
     pub fn raw_name(&self) -> Vec<u8> {
-        self.name.clone()
+        let length = self.name.len() as u32;
+        let mut vec: Vec<u8> = Vec::new();
+        vec.append(&mut Vec::from(Self::u32_be_as_slice(length)));
+        vec.append(&mut self.name.clone());
+        vec
     }
 
     fn named_from(orig: &Vec<u8>, offset: &mut usize) -> Self {
@@ -369,7 +373,7 @@ impl Topic {
         ((array[3] as u32) <<  0)
     }
 
-    fn u32_be_slice_as(val: u32) -> [u8; 4] {
+    fn u32_be_as_slice(val: u32) -> [u8; 4] {
         [
             (val >> 24) as u8,
             (val >> 16) as u8,
@@ -469,8 +473,17 @@ impl Header {
         self
     }
 
-    pub fn set_text_topic<'a>(&'a mut self, text_topic: Vec<u8>) -> &'a mut Self {
-        self.topic = Topic{
+    pub fn set_string_topic<'a>(&'a mut self, text_topic: String) -> &'a mut Self {
+        self.topic = Topic {
+            name: text_topic.into_bytes(),
+            id: 0
+        };
+        self.message_flags.text_topic = true;
+        self
+    }
+
+    pub fn set_vector_topic<'a>(&'a mut self, text_topic: Vec<u8>) -> &'a mut Self {
+        self.topic = Topic {
             name: text_topic,
             id: 0
         };
@@ -479,7 +492,7 @@ impl Header {
     }
 
     pub fn set_numeric_topic<'a>(&'a mut self, numeric_topic: u32) -> &'a mut Self {
-        self.topic = Topic{
+        self.topic = Topic {
             name: Vec::new(),
             id: numeric_topic
         };
