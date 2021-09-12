@@ -1,22 +1,12 @@
 mod protocol;
-
-use std::str;
-use std::ptr;
-
-use protocol::lamt::Header as Header;
-use protocol::lamt::PublishSettings as PublishSettings;
-use protocol::lamt::DeliveryMode as DeliveryMode;
-use protocol::lamt::TransportMode as TransportMode;
-use protocol::lamt::MessageType as MessageType;
+use protocol::lamt as lamt;
 
 fn main() {
-    let header = PublishSettings{
-        DeliveryMode::PublishAndForget,
-        TransportMode::Multicast,
-        MessageType::Publish,
-        ptr::null(),
-        ptr::null()
-    };
+    let mut header = lamt::Header::new();
+    let modified_header = header
+        .set_transport_mode(lamt::TransportMode::Unicast)
+        .set_numeric_topic(4)
+        .set_message_type(lamt::MessageType::Publish);
     println!("hello, octopusmq user or admin or whoever you are...");
-    println!("topic: {:#?}", str::from_utf8(header.raw().as_slice()))
+    println!("topic: {:?}", modified_header.raw())
 }
