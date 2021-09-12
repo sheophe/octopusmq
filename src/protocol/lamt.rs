@@ -2,6 +2,17 @@ use std::mem;
 use std::convert::TryInto;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
+use std::io;
+use std::io::Write;
+use std::io::Read;
+
+use flate2::Compression;
+use flate2::write::GzEncoder;
+use flate2::write::ZlibEncoder;
+use flate2::write::DeflateEncoder;
+use flate2::read::GzDecoder;
+use flate2::read::ZlibDecoder;
+use flate2::read::DeflateDecoder;
 
 const LAMT_DEFAULT_PROTOCOL_NAME: [u8; 4] = [0x4c, 0x41, 0x4d, 0x54];
 const LAMT_EMPTY_PROTOCOL_NAME: [u8; 4] = [0x0, 0x0, 0x0, 0x0];
@@ -23,18 +34,20 @@ impl ProtocolVersion {
         }
     }
 
-    pub fn default() -> Self {
-        Self{
-            name: LAMT_DEFAULT_PROTOCOL_NAME,
-            version: LAMT_DEFAULT_PROTOCOL_VERSION
-        }
-    }
-
     pub fn raw(&self) -> Vec<u8> {
         let mut vec: Vec<u8> = Vec::new();
         vec.append(&mut Vec::from(self.name));
         vec.push(self.version);
         vec
+    }
+}
+
+impl Default for ProtocolVersion {
+    fn default() -> Self {
+        Self{
+            name: LAMT_DEFAULT_PROTOCOL_NAME,
+            version: LAMT_DEFAULT_PROTOCOL_VERSION
+        }
     }
 }
 
@@ -61,8 +74,10 @@ impl TransportMode {
     pub fn raw(&self) -> u8 {
         *self as u8
     }
+}
 
-    pub fn default() -> Self {
+impl Default for TransportMode {
+    fn default() -> Self {
         Self::Unknown
     }
 }
@@ -105,8 +120,10 @@ impl MessageType {
     pub fn raw(&self) -> u8 {
         *self as u8
     }
+}
 
-    pub fn default() -> Self {
+impl Default for MessageType {
+    fn default() -> Self {
         Self::Unknown
     }
 }
@@ -149,8 +166,10 @@ impl DeliveryMode {
     pub fn raw(&self) -> u8 {
         *self as u8
     }
+}
 
-    pub fn default() -> Self {
+impl Default for DeliveryMode {
+    fn default() -> Self {
         Self::Unknown
     }
 }
@@ -190,12 +209,50 @@ impl MessageFlags {
         ((self.payload as u8) << 0)
     }
 
-    pub fn default() -> Self {
-        Self {
+    pub fn with_payload() -> Self {
+        Self{
             compression: false,
             encryption: false,
             text_topic: false,
             payload: true
+        }
+    }
+
+    pub fn with_compression() -> Self {
+        Self{
+            compression: true,
+            encryption: false,
+            text_topic: false,
+            payload: true
+        }
+    }
+
+    pub fn with_encryption() -> Self {
+        Self{
+            compression: false,
+            encryption: true,
+            text_topic: false,
+            payload: true
+        }
+    }
+
+    pub fn with_compression_and_encryption() -> Self {
+        Self{
+            compression: true,
+            encryption: true,
+            text_topic: false,
+            payload: true
+        }
+    }
+}
+
+impl Default for MessageFlags {
+    fn default() -> Self {
+        Self {
+            compression: false,
+            encryption: false,
+            text_topic: false,
+            payload: false
         }
     }
 }
@@ -222,28 +279,30 @@ impl From<&Vec<u8>> for MessageFlags {
 // CompressionAlgorithm is encoded using 3 bits, allowing 8 total possible algorithms
 #[derive(Copy, Clone)]
 pub enum CompressionAlgorithm {
-    Unknown = 0x0,
-    Gz,
-    Bz2,
+    Deflate,
+    Gzip,
     Zlib,
-    Zstd
+    Zstd,
+    NoCompression = 0x8
 }
 
 impl CompressionAlgorithm {
     pub fn raw(&self) -> u8 {
         *self as u8
     }
+}
 
-    pub fn default() -> Self {
-        Self::Unknown
+impl Default for CompressionAlgorithm {
+    fn default() -> Self {
+        Self::NoCompression
     }
 }
 
 impl From<u8> for CompressionAlgorithm {
     fn from(orig: u8) -> Self {
         return match orig {
-            0x1 => Self::Gz,
-            0x2 => Self::Bz2,
+            0x1 => Self::Deflate,
+            0x2 => Self::Gzip,
             0x3 => Self::Zlib,
             0x4 => Self::Zstd,
             _ => Self::default()
@@ -254,28 +313,37 @@ impl From<u8> for CompressionAlgorithm {
 // CompressionMode is encoded using 8 bits
 #[derive(Copy, Clone)]
 pub struct CompressionMode {
-    compression_algorithm: CompressionAlgorithm,
-    compression_level: u8
+    algorithm: CompressionAlgorithm,
+    level: i8
 }
 
 impl CompressionMode {
-    pub fn new(compression_algorithm: CompressionAlgorithm, compression_level: u8) -> Self {
+    pub fn new(compression_algorithm: CompressionAlgorithm, compression_level: i8) -> Self {
         Self {
-            compression_algorithm: compression_algorithm,
-            compression_level: compression_level
+            algorithm: compression_algorithm,
+            level: compression_level
         }
     }
 
     pub fn raw(&self) -> u8 {
-        return (self.compression_algorithm as u8 & 0x07 << 5) | (self.compression_level & 0x1f)
+        return (self.algorithm as u8 & 0x07 << 5) | (self.level as u8 & 0x1f)
+    }
+}
+
+impl Default for CompressionMode {
+    fn default() -> Self {
+        Self {
+            algorithm: CompressionAlgorithm::default(),
+            level: 0
+        }
     }
 }
 
 impl From<u8> for CompressionMode {
     fn from(orig: u8) -> Self {
         Self {
-            compression_algorithm: CompressionAlgorithm::from((orig & 0xe0) >> 5),
-            compression_level: orig & 0x1f
+            algorithm: CompressionAlgorithm::from((orig & 0xe0) >> 5),
+            level: (orig & 0x1f) as i8
         }
     }
 }
@@ -302,8 +370,10 @@ impl EncryptionAlgorithm {
     pub fn raw(&self) -> u8 {
         *self as u8
     }
+}
 
-    pub fn default() -> Self {
+impl Default for EncryptionAlgorithm {
+    fn default() -> Self {
         Self::Unknown
     }
 }
@@ -335,13 +405,6 @@ impl Topic {
         Self::numbered_from(orig, &mut header.offset)
     }
 
-    pub fn default() -> Self {
-        Self {
-            name: Vec::new(),
-            id: 0
-        }
-    }
-
     pub fn raw_id(&self) -> Vec<u8> {
         Vec::from(u32_as_slice(self.id))
     }
@@ -371,6 +434,15 @@ impl Topic {
         Self {
             name: Vec::new(),
             id: slice_as_u32(id_slice)
+        }
+    }
+}
+
+impl Default for Topic {
+    fn default() -> Self {
+        Self {
+            name: Vec::new(),
+            id: 0
         }
     }
 }
@@ -422,6 +494,13 @@ impl Header {
         vec
     }
 
+    pub fn get_compression_mode(&self) -> CompressionMode {
+        match self.compression_mode {
+            Some(v) => v,
+            None => CompressionMode::default()
+        }
+    }
+
     pub fn set_transport_mode<'a>(&'a mut self, transport_mode: TransportMode) -> &'a mut Self {
         self.transport_mode = transport_mode;
         self
@@ -434,6 +513,11 @@ impl Header {
 
     pub fn set_delivery_mode<'a>(&'a mut self, delivery_mode: DeliveryMode) -> &'a mut Self {
         self.delivery_mode = delivery_mode;
+        self
+    }
+
+    pub fn set_message_flags<'a>(&'a mut self, message_flags: MessageFlags) -> &'a mut Self {
+        self.message_flags = message_flags;
         self
     }
 
@@ -537,12 +621,127 @@ impl Payload {
 
     pub fn append<'a>(&'a mut self, other: &mut Vec<u8>) -> &'a mut Self {
         self.data.append(other);
+        self.update_hash_and_length();
+        self
+    }
+
+    pub fn into_compressed<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
+        let compression_result = Self::compress(&self.data, compression_mode);
+        self.data = match compression_result {
+            Ok(v) => v,
+            Err(_) => self.data.clone()
+        };
+        self.update_hash_and_length();
+        self
+    }
+
+    pub fn into_decompressed<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
+        let decompression_result = Self::decompress(&self.data, compression_mode);
+        self.data = match decompression_result {
+            Ok(v) => v,
+            Err(_) => self.data.clone()
+        };
+        self.update_hash_and_length();
+        self
+    }
+
+    fn update_hash_and_length(&mut self) {
         self.length = self.data.len() as u32;
         let mut hasher = DefaultHasher::new();
         self.data.hash(&mut hasher);
         self.hash = hasher.finish() as u32;
-        self
     }
+
+    fn compress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Vec<u8>, io::Error> {
+        let level = compression_mode.level;
+        match compression_mode.algorithm {
+            CompressionAlgorithm::Deflate => Self::compress_deflate(vec, level),
+            CompressionAlgorithm::Gzip => Self::compress_gzip(vec, level),
+            CompressionAlgorithm::Zlib => Self::compress_zlib(vec, level),
+            CompressionAlgorithm::Zstd => Self::compress_zstd(vec, level),
+            _ => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn decompress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Vec<u8>, io::Error> {
+        match compression_mode.algorithm {
+            CompressionAlgorithm::Deflate => Self::decompress_deflate(vec),
+            CompressionAlgorithm::Gzip => Self::decompress_gzip(vec),
+            CompressionAlgorithm::Zlib => Self::decompress_zlib(vec),
+            CompressionAlgorithm::Zstd => Self::decompress_zstd(vec),
+            _ => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn compress_zstd(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        zstd::block::compress(vec, level as i32)
+    }
+
+    fn compress_gzip(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        let mut e = GzEncoder::new(Vec::new(), Self::flate2_compression(level));
+        match e.write_all(vec) {
+            Ok(_) => e.finish(),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn compress_deflate(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        let mut e = DeflateEncoder::new(Vec::new(), Self::flate2_compression(level));
+        match e.write_all(vec) {
+            Ok(_) => e.finish(),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn compress_zlib(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        let mut e = ZlibEncoder::new(Vec::new(), Self::flate2_compression(level));
+        match e.write_all(vec) {
+            Ok(_) => e.finish(),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn decompress_zstd(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        zstd::block::decompress(vec,  std::i32::MAX as usize)
+    }
+
+    fn decompress_gzip(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        let mut e = GzDecoder::new(&vec[..]);
+        let mut decoded_vec: Vec<u8> = Vec::new();
+        match e.read_to_end(&mut decoded_vec) {
+            Ok(_) => Ok(decoded_vec),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn decompress_deflate(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        let mut e = DeflateDecoder::new(&vec[..]);
+        let mut decoded_vec: Vec<u8> = Vec::new();
+        match e.read_to_end(&mut decoded_vec) {
+            Ok(_) => Ok(decoded_vec),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn decompress_zlib(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        let mut e = ZlibDecoder::new(&vec[..]);
+        let mut decoded_vec: Vec<u8> = Vec::new();
+        match e.read_to_end(&mut decoded_vec) {
+            Ok(_) => Ok(decoded_vec),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn flate2_compression(level: i8) -> Compression {
+        match level {
+            0x0 => Compression::none(),
+            0x1 => Compression::fast(),
+            0x2..=0x6 => Compression::default(),
+            x if x >= 0x7 => Compression::best(),
+            _ => Compression::default()
+        }
+    }
+
 }
 
 impl From<&Vec<u8>> for Payload {
@@ -559,12 +758,12 @@ impl From<&Vec<u8>> for Payload {
 
 pub struct Message {
     header: Header,
-    payload: Payload
+    payload: Option<Payload>
 }
 
 impl Message {
-    pub fn new(header: Header, payload: Payload) -> Message {
-        Message {
+    pub fn new(header: Header, payload: Option<Payload>) -> Self {
+        Self {
             header: header,
             payload: payload
         }
@@ -573,8 +772,25 @@ impl Message {
     pub fn raw(&self) -> Vec<u8> {
         let mut vec: Vec<u8> = Vec::new();
         vec.append(&mut self.header.raw());
-        vec.append(&mut self.payload.raw());
+        if self.header.message_flags.payload {
+            vec.append(&mut self.payload.as_ref().unwrap().raw());
+        }
         vec
+    }
+}
+
+impl From<&Vec<u8>> for Message {
+    fn from(orig: &Vec<u8>) -> Self {
+        let header = Header::from(orig);
+        let payload = if header.message_flags.payload {
+            Some(Payload::from(&Vec::from(&orig[header.offset..])))
+        } else {
+            None
+        };
+        Self {
+            header: header,
+            payload: payload
+        }
     }
 }
 
