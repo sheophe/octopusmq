@@ -4,187 +4,187 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="6" value="Protocol Name&lt;br style=&quot;font-size: 13px;&quot;&gt;(&quot;LAMT&quot;)&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="6" value="Protocol Name&lt;br style=&quot;font-size: 13px;&quot;&gt;(&quot;LAMT&quot;)&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2800" width="320" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="Protocol Version&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="11" value="Protocol Version&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2480" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-1" value="Delivery&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;4 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-1" value="Delivery&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;4 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2320" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-2" value="Transport&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;2 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-2" value="Transport&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;2 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2400" width="80" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-6" value="Topic&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-6" value="Topic&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="880" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="Comp.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="4" value="Comp.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="800" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="Encr.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="5" value="Encr.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="840" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12" value="Message&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;6 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12" value="Message&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;6 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="720" y="-2400" width="240" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="13" value="Payl.&lt;br style=&quot;font-size: 13px;&quot;&gt;Pres.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="13" value="Payl.&lt;br style=&quot;font-size: 13px;&quot;&gt;Pres.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="920" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-5" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;3 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-5" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;3 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2240" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-10" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Level&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;5 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-10" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Level&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;5 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="760" y="-2240" width="200" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-14" value="Encryption&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-14" value="Encryption&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2160" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-16" value="Topic Length = TL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#3700CC;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-16" value="Topic Length = TL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#3700CC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2080" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-18" value="Topic&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;TL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;imageHeight=24;arcSize=32;strokeColor=#3700CC;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-18" value="Topic&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;TL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;imageHeight=24;arcSize=32;strokeColor=#3700CC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-2000" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="21" value="Topic Flag = 1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontStyle=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="21" value="Topic Flag = 1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontStyle=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="750" y="-1010" width="100" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="34" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="34" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="590" y="-2800" width="20" height="560" as="geometry"/>
                 </mxCell>
-                <mxCell id="35" value="Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(7 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="35" value="Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(7 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="500" y="-2530" width="80" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="37" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="37" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="590" y="-2240" width="20" height="160" as="geometry"/>
                 </mxCell>
-                <mxCell id="39" value="Config Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(2 bytes MAX)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="39" value="Config Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(2 bytes MAX)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="500" y="-2170" width="80" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="40" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="40" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="590" y="-2080" width="20" height="160" as="geometry"/>
                 </mxCell>
-                <mxCell id="41" value="Topic Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(256 bytes MAX)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="41" value="Topic Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(256 bytes MAX)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="440" y="-2010" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="42" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="42" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="430" y="-2800" width="20" height="1680" as="geometry"/>
                 </mxCell>
-                <mxCell id="43" value="Header&lt;br style=&quot;font-size: 13px;&quot;&gt;11 bytes MIN&lt;br style=&quot;font-size: 13px;&quot;&gt;23 bytes NORM&lt;br style=&quot;font-size: 13px;&quot;&gt;275 bytes MAX" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="43" value="Header&lt;br style=&quot;font-size: 13px;&quot;&gt;11 bytes MIN&lt;br style=&quot;font-size: 13px;&quot;&gt;23 bytes NORM&lt;br style=&quot;font-size: 13px;&quot;&gt;275 bytes MAX" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="300" y="-1970" width="110" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="44" value="Payload Current Part Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="44" value="Payload Current Part Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-1920" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="45" value="Payload Total Parts Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="45" value="Payload Total Parts Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-1840" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="46" value="Payload Part Hash&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="46" value="Payload Part Hash&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-1760" width="320" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-20" value="Payload Part Length = PL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-20" value="Payload Part Length = PL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-1440" width="320" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="12RVGB_o2W1lxHzozf5x-22" value="Payload&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;PL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;arcSize=32;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="12RVGB_o2W1lxHzozf5x-22" value="Payload&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;PL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;arcSize=32;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="640" y="-1120" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="47" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="47" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="590" y="-1920" width="20" height="800" as="geometry"/>
                 </mxCell>
-                <mxCell id="48" value="Payload Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(10 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="48" value="Payload Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(10 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="440" y="-1530" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="65" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="65" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1450" y="-2800" width="20" height="560" as="geometry"/>
                 </mxCell>
-                <mxCell id="66" value="Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(7 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="66" value="Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(7 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1360" y="-2530" width="80" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="67" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="67" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1450" y="-2240" width="20" height="160" as="geometry"/>
                 </mxCell>
-                <mxCell id="68" value="Config Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(2 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="68" value="Config Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(2 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1360" y="-2170" width="80" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="69" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="69" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1450" y="-2080" width="20" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="70" value="Topic Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(4 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="70" value="Topic Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(4 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1300" y="-1930" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="71" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="71" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1290" y="-2800" width="20" height="1840" as="geometry"/>
                 </mxCell>
-                <mxCell id="72" value="Optimal Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(23 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="72" value="Optimal Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(23 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1160" y="-1890" width="110" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="73" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="73" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1450" y="-1760" width="20" height="800" as="geometry"/>
                 </mxCell>
-                <mxCell id="74" value="Payload Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(10 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="74" value="Payload Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(10 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1300" y="-1370" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="75" value="General Structure" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=42;fontColor=#030303;" parent="1" vertex="1">
+                <mxCell id="75" value="General Structure" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=42;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="660" y="-2960" width="280" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="76" value="Optimal&lt;br&gt;Example" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=42;fontColor=#030303;" parent="1" vertex="1">
+                <mxCell id="76" value="Optimal&lt;br&gt;Example" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=42;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1520" y="-2960" width="280" height="120" as="geometry"/>
                 </mxCell>
-                <mxCell id="85" value="Protocol Name&lt;br style=&quot;font-size: 13px;&quot;&gt;(&quot;LAMT&quot;)&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="85" value="Protocol Name&lt;br style=&quot;font-size: 13px;&quot;&gt;(&quot;LAMT&quot;)&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-2800" width="320" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="86" value="Protocol Version&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="86" value="Protocol Version&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#001DBC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-2480" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="87" value="Delivery&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;4 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="87" value="Delivery&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;4 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-2320" width="160" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="88" value="Transport&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;2 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="88" value="Transport&lt;br style=&quot;font-size: 13px;&quot;&gt;Mode&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;2 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-2400" width="80" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="89" value="Topic&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="89" value="Topic&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1740" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="90" value="Comp.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="90" value="Comp.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1660" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="91" value="Encr.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="91" value="Encr.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1700" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="92" value="Message&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;6 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="92" value="Message&lt;br style=&quot;font-size: 13px;&quot;&gt;Type&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;6 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1580" y="-2400" width="240" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="93" value="Payl.&lt;br style=&quot;font-size: 13px;&quot;&gt;Pres.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="93" value="Payl.&lt;br style=&quot;font-size: 13px;&quot;&gt;Pres.&lt;br style=&quot;font-size: 13px;&quot;&gt;Flag&lt;br style=&quot;font-size: 13px;&quot;&gt;1 bit" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#2D7600;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1780" y="-2320" width="40" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="94" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;3 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="94" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;3 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-2240" width="120" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="95" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Level&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;5 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="95" value="Compression&lt;br style=&quot;font-size: 13px;&quot;&gt;Level&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;5 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6F0000;strokeWidth=3;fillColor=none;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1620" y="-2240" width="200" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="96" value="Encryption&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="96" value="Encryption&lt;br style=&quot;font-size: 13px;&quot;&gt;Algorithm&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#A50040;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-2160" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="33" value="Topic ID&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;64 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#3700CC;strokeWidth=3;fontColor=#ffffff;fontSize=13;fillColor=none;" parent="1" vertex="1">
+                <mxCell id="33" value="Topic ID&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;64 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#3700CC;strokeWidth=3;fontSize=13;fillColor=none;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-2080" width="320" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="55" value="Topic Flag = 1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontStyle=1;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="55" value="Topic Flag = 1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontStyle=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1610" y="-850" width="100" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="57" value="Payload Total Parts Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="57" value="Payload Total Parts Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-1680" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="58" value="Payload Part Hash&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="58" value="Payload Part Hash&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-1600" width="320" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="59" value="Payload Part Length = PL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="59" value="Payload Part Length = PL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-1280" width="320" height="320" as="geometry"/>
                 </mxCell>
-                <mxCell id="60" value="Payload&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;PL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;arcSize=32;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="60" value="Payload&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;PL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;arcSize=32;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-960" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="56" value="Payload Current Part Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontColor=#030303;fontSize=13;" parent="1" vertex="1">
+                <mxCell id="56" value="Payload Current Part Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-1760" width="320" height="80" as="geometry"/>
                 </mxCell>
             </root>

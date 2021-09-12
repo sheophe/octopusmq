@@ -1,5 +1,7 @@
 use std::mem;
 use std::convert::TryInto;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 
 const LAMT_DEFAULT_PROTOCOL_NAME: [u8; 4] = [0x4c, 0x41, 0x4d, 0x54];
 const LAMT_EMPTY_PROTOCOL_NAME: [u8; 4] = [0x0, 0x0, 0x0, 0x0];
@@ -7,6 +9,7 @@ const LAMT_DEFAULT_PROTOCOL_VERSION: u8 = 0x01;
 const LAMT_FIXED_OFFSET: usize = 7;
 
 // ProtocolVersion is encoded using 5 bytes
+#[derive(Copy, Clone)]
 pub struct ProtocolVersion {
     name: [u8; 4],
     version: u8
@@ -48,10 +51,10 @@ impl From<&Vec<u8>> for ProtocolVersion {
 // TransportMode is encoded using 2 bits, allowing 4 total possible modes
 #[derive(Copy, Clone)]
 pub enum TransportMode {
+    Unknown = 0x0,
     Unicast,
     Multicast,
-    Dynamic,
-    Unknown = 0x3
+    Dynamic
 }
 
 impl TransportMode {
@@ -67,9 +70,9 @@ impl TransportMode {
 impl From<u8> for TransportMode {
     fn from(orig: u8) -> Self {
         match orig {
-            0x0 => return Self::Unicast,
-            0x1 => return Self::Multicast,
-            0x2 => return Self::Dynamic,
+            0x1 => return Self::Unicast,
+            0x2 => return Self::Multicast,
+            0x3 => return Self::Dynamic,
             _ => return Self::default(),
         };
     }
@@ -110,18 +113,18 @@ impl MessageType {
 
 impl From<u8> for MessageType {
     fn from(orig: u8) -> Self {
-        match orig {
-            0x01 => return Self::Publish,
-            0x02 => return Self::PublishAck,
-            0x03 => return Self::PublishNack,
-            0x04 => return Self::PublishStored,
-            0x05 => return Self::PublishReleased,
-            0x06 => return Self::Request,
-            0x07 => return Self::Subscribe,
-            0x08 => return Self::SubscribeAck,
-            0x09 => return Self::Unsubscribe,
-            0x0a => return Self::UnsubscribeAck,
-            _ => return Self::default(),
+        return match orig {
+            0x01 => Self::Publish,
+            0x02 => Self::PublishAck,
+            0x03 => Self::PublishNack,
+            0x04 => Self::PublishStored,
+            0x05 => Self::PublishReleased,
+            0x06 => Self::Request,
+            0x07 => Self::Subscribe,
+            0x08 => Self::SubscribeAck,
+            0x09 => Self::Unsubscribe,
+            0x0a => Self::UnsubscribeAck,
+            _ => Self::default(),
         };
     }
 }
@@ -136,10 +139,10 @@ impl From<&Vec<u8>> for MessageType {
 // DeliveryMode is encoded using 4 bits, allowing 16 total possible modes
 #[derive(Copy, Clone)]
 pub enum DeliveryMode {
+    Unknown = 0x0,
     PublishAndForget,
     AtLeastOnce,
-    OnlyOnce,
-    Unknown = 0xf
+    ExactlyOnce
 }
 
 impl DeliveryMode {
@@ -154,11 +157,11 @@ impl DeliveryMode {
 
 impl From<u8> for DeliveryMode {
     fn from(orig: u8) -> Self {
-        match orig {
-            0x0 => return Self::PublishAndForget,
-            0x1 => return Self::AtLeastOnce,
-            0x2 => return Self::OnlyOnce,
-            _ => return Self::default(),
+        return match orig {
+            0x1 => Self::PublishAndForget,
+            0x2 => Self::AtLeastOnce,
+            0x3 => Self::ExactlyOnce,
+            _ => Self::default(),
         };
     }
 }
@@ -171,6 +174,7 @@ impl From<&Vec<u8>> for DeliveryMode {
     }
 }
 
+#[derive(Copy, Clone)]
 pub struct MessageFlags {
     compression: bool, 
     encryption: bool,
@@ -180,10 +184,10 @@ pub struct MessageFlags {
 
 impl MessageFlags {
     pub fn raw(&self) -> u8 {
-        ((self.compression as u8) << 3) |
-        ((self.encryption as u8) << 2) |
-        ((self.text_topic as u8) << 1) |
-        ((self.payload as u8) << 1)
+        ((self.compression as u8) << 3) +
+        ((self.encryption as u8) << 2) +
+        ((self.text_topic as u8) << 1) +
+        ((self.payload as u8) << 0)
     }
 
     pub fn default() -> Self {
@@ -202,7 +206,7 @@ impl From<u8> for MessageFlags {
             compression: orig & (1 << 3) != 0,
             encryption: orig & (1 << 2) != 0,
             text_topic: orig & (1 << 1) != 0,
-            payload: orig & 1 != 0
+            payload: orig & (1 << 0) != 0
         }
     }
 }
@@ -218,6 +222,7 @@ impl From<&Vec<u8>> for MessageFlags {
 // CompressionAlgorithm is encoded using 3 bits, allowing 8 total possible algorithms
 #[derive(Copy, Clone)]
 pub enum CompressionAlgorithm {
+    Unknown = 0x0,
     Gz,
     Bz2,
     Zlib,
@@ -230,23 +235,24 @@ impl CompressionAlgorithm {
     }
 
     pub fn default() -> Self {
-        Self::Gz
+        Self::Unknown
     }
 }
 
 impl From<u8> for CompressionAlgorithm {
     fn from(orig: u8) -> Self {
-        match orig {
-            0x0 => return Self::Gz,
-            0x1 => return Self::Bz2,
-            0x2 => return Self::Zlib,
-            0x3 => return Self::Zstd,
-            _ => return Self::default()
+        return match orig {
+            0x1 => Self::Gz,
+            0x2 => Self::Bz2,
+            0x3 => Self::Zlib,
+            0x4 => Self::Zstd,
+            _ => Self::default()
         };
     }
 }
 
 // CompressionMode is encoded using 8 bits
+#[derive(Copy, Clone)]
 pub struct CompressionMode {
     compression_algorithm: CompressionAlgorithm,
     compression_level: u8
@@ -254,7 +260,7 @@ pub struct CompressionMode {
 
 impl CompressionMode {
     pub fn new(compression_algorithm: CompressionAlgorithm, compression_level: u8) -> Self {
-        Self{
+        Self {
             compression_algorithm: compression_algorithm,
             compression_level: compression_level
         }
@@ -267,7 +273,7 @@ impl CompressionMode {
 
 impl From<u8> for CompressionMode {
     fn from(orig: u8) -> Self {
-        Self{
+        Self {
             compression_algorithm: CompressionAlgorithm::from((orig & 0xe0) >> 5),
             compression_level: orig & 0x1f
         }
@@ -284,11 +290,12 @@ impl From<&Vec<u8>> for CompressionMode {
 // CompressionMode is encoded using 8 bits
 #[derive(Copy, Clone)]
 pub enum EncryptionAlgorithm {
-    AesGCM = 0x0,
+    Unknown = 0x0,
+    AesGCM,
     AesCCM,
     AesCBC,
+    Gpg,
     ChaCha20Poly1305,
-    Unknown = 0xff
 }
 
 impl EncryptionAlgorithm {
@@ -303,16 +310,18 @@ impl EncryptionAlgorithm {
 
 impl From<u8> for EncryptionAlgorithm {
     fn from(orig: u8) -> Self {
-        match orig {
-            0x0 => return Self::AesGCM,
-            0x1 => return Self::AesCCM,
-            0x2 => return Self::AesCBC,
-            0x3 => return Self::ChaCha20Poly1305,
-            _ => return Self::default()
+        return match orig {
+            0x1 => Self::AesGCM,
+            0x2 => Self::AesCCM,
+            0x3 => Self::AesCBC,
+            0x4 => Self::Gpg,
+            0x5 => Self::ChaCha20Poly1305,
+            _ => Self::default()
         };
     }
 }
 
+#[derive(Clone)]
 pub struct Topic {
     name: Vec<u8>,
     id: u32
@@ -334,13 +343,12 @@ impl Topic {
     }
 
     pub fn raw_id(&self) -> Vec<u8> {
-        Vec::from(Self::u32_be_as_slice(self.id))
+        Vec::from(u32_as_slice(self.id))
     }
 
     pub fn raw_name(&self) -> Vec<u8> {
-        let length = self.name.len() as u32;
         let mut vec: Vec<u8> = Vec::new();
-        vec.append(&mut Vec::from(Self::u32_be_as_slice(length)));
+        vec.append(&mut Vec::from(u32_as_slice(self.name.len() as u32)));
         vec.append(&mut self.name.clone());
         vec
     }
@@ -362,35 +370,12 @@ impl Topic {
         *offset += length;
         Self {
             name: Vec::new(),
-            id: Self::slice_as_u32_be(id_slice)
+            id: slice_as_u32(id_slice)
         }
     }
-
-    fn slice_as_u32_be(array: &[u8]) -> u32 {
-        ((array[0] as u32) << 24) +
-        ((array[1] as u32) << 16) +
-        ((array[2] as u32) <<  8) +
-        ((array[3] as u32) <<  0)
-    }
-
-    fn u32_be_as_slice(val: u32) -> [u8; 4] {
-        [
-            (val >> 24) as u8,
-            (val >> 16) as u8,
-            (val >> 8) as u8,
-            (val >> 0) as u8
-        ]
-    }
 }
 
-pub struct Payload {
-    current_part: u8,
-    total_parts: u8,
-    hash: u32,
-    length: u32,
-    data: Vec<u8>
-}
-
+#[derive(Clone)]
 pub struct Header {
     protocol_version: ProtocolVersion,
     transport_mode: TransportMode,
@@ -404,15 +389,25 @@ pub struct Header {
 }
 
 impl Header {
+    pub fn new() -> Self {
+        Self {
+            protocol_version: ProtocolVersion::default(),
+            transport_mode: TransportMode::default(),
+            message_type: MessageType::default(),
+            delivery_mode: DeliveryMode::default(),
+            message_flags: MessageFlags::default(),
+            compression_mode: None,
+            encryption_algo: None,
+            topic: Topic::default(),
+            offset: LAMT_FIXED_OFFSET
+        }
+    }
+
     pub fn raw(&self) -> Vec<u8> {
         let mut vec: Vec<u8> = Vec::new();
         vec.append(&mut self.protocol_version.raw());
-        vec.push(
-            ((self.transport_mode.raw() & 0x3) << 6) | (self.message_type.raw() & 0x3f)
-        );
-        vec.push(
-            ((self.delivery_mode.raw() & 0xf) << 4) | (self.message_flags.raw() & 0xf)
-        );
+        vec.push(((self.transport_mode.raw() & 0x3) << 6) | (self.message_type.raw() & 0x3f));
+        vec.push(((self.delivery_mode.raw() & 0xf) << 4) | (self.message_flags.raw() & 0xf));
         if self.message_flags.compression {
             vec.push(self.compression_mode.as_ref().unwrap().raw());
         }
@@ -427,20 +422,6 @@ impl Header {
         vec
     }
 
-    pub fn new<'a>() -> Self {
-        Self {
-            protocol_version: ProtocolVersion::default(),
-            transport_mode: TransportMode::default(),
-            message_type: MessageType::default(),
-            delivery_mode: DeliveryMode::default(),
-            message_flags: MessageFlags::default(),
-            compression_mode: Option::default(), 
-            encryption_algo: Option::default(),
-            topic: Topic::default(),
-            offset: LAMT_FIXED_OFFSET
-        }
-    }
-
     pub fn set_transport_mode<'a>(&'a mut self, transport_mode: TransportMode) -> &'a mut Self {
         self.transport_mode = transport_mode;
         self
@@ -453,11 +434,6 @@ impl Header {
 
     pub fn set_delivery_mode<'a>(&'a mut self, delivery_mode: DeliveryMode) -> &'a mut Self {
         self.delivery_mode = delivery_mode;
-        self
-    }
-
-    pub fn set_message_flags<'a>(&'a mut self, message_flags: MessageFlags) -> &'a mut Self {
-        self.message_flags = message_flags;
         self
     }
 
@@ -512,7 +488,7 @@ impl From<&Vec<u8>> for Header {
             compression_mode: None,
             encryption_algo: None,
             topic: Topic::default(),
-            offset: LAMT_FIXED_OFFSET,
+            offset: LAMT_FIXED_OFFSET
         };
         if header.message_flags.compression {
             header.compression_mode = Some(CompressionMode::from(orig[header.offset]));
@@ -525,4 +501,95 @@ impl From<&Vec<u8>> for Header {
         header.topic = Topic::from(orig, &mut header);
         header
     }
+}
+
+#[derive(Clone)]
+pub struct Payload {
+    current_part: u8,
+    total_parts: u8,
+    hash: u32,
+    length: u32,
+    data: Vec<u8>
+}
+
+impl Payload {
+    pub fn new() -> Self {
+        Self {
+            current_part: 1,
+            total_parts: 1,
+            hash: 0,
+            length: 0,
+            data: Vec::new()
+        }
+    }
+
+    pub fn raw(&self) -> Vec<u8> {
+        let mut vec: Vec<u8> = Vec::new();
+        vec.push(self.current_part);
+        vec.push(self.total_parts);
+        let mut hasher = DefaultHasher::new();
+        self.data.hash(&mut hasher);
+        vec.append(&mut Vec::from(u32_as_slice(hasher.finish() as u32)));
+        vec.append(&mut Vec::from(u32_as_slice(self.length)));
+        vec.append(&mut self.data.clone());
+        vec
+    }
+
+    pub fn append<'a>(&'a mut self, other: &mut Vec<u8>) -> &'a mut Self {
+        self.data.append(other);
+        self.length = self.data.len() as u32;
+        let mut hasher = DefaultHasher::new();
+        self.data.hash(&mut hasher);
+        self.hash = hasher.finish() as u32;
+        self
+    }
+}
+
+impl From<&Vec<u8>> for Payload {
+    fn from(orig: &Vec<u8>) -> Self {
+        Self {
+            current_part: orig[0],
+            total_parts: orig[1],
+            hash: slice_as_u32(&orig[2..6]),
+            length: slice_as_u32(&orig[6..10]),
+            data: Vec::from(&orig[10..])
+        }
+    }
+}
+
+pub struct Message {
+    header: Header,
+    payload: Payload
+}
+
+impl Message {
+    pub fn new(header: Header, payload: Payload) -> Message {
+        Message {
+            header: header,
+            payload: payload
+        }
+    }
+
+    pub fn raw(&self) -> Vec<u8> {
+        let mut vec: Vec<u8> = Vec::new();
+        vec.append(&mut self.header.raw());
+        vec.append(&mut self.payload.raw());
+        vec
+    }
+}
+
+fn slice_as_u32(array: &[u8]) -> u32 {
+    ((array[0] as u32) << 24) +
+    ((array[1] as u32) << 16) +
+    ((array[2] as u32) <<  8) +
+    ((array[3] as u32) <<  0)
+}
+
+fn u32_as_slice(val: u32) -> [u8; 4] {
+    [
+        (val >> 24) as u8,
+        (val >> 16) as u8,
+        (val >> 8) as u8,
+        (val >> 0) as u8
+    ]
 }
