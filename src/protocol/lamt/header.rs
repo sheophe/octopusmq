@@ -6,7 +6,7 @@ use crate::lamt::{
     MessageFlags,
     CompressionAlgorithm,
     CompressionMode,
-    EncryptionAlgorithm,
+    EncryptionMode,
     ClientId,
     Topic
 };
@@ -21,7 +21,7 @@ pub struct Header {
     delivery_mode: DeliveryMode,
     message_flags: MessageFlags,
     compression_mode: Option<CompressionMode>, 
-    encryption_algo: Option<EncryptionAlgorithm>,
+    encryption_mode: Option<EncryptionMode>,
     client_id: ClientId,
     topic: Topic,
     offset: usize
@@ -36,7 +36,7 @@ impl Header {
             delivery_mode: DeliveryMode::default(),
             message_flags: MessageFlags::default(),
             compression_mode: None,
-            encryption_algo: None,
+            encryption_mode: None,
             client_id: ClientId::default(),
             topic: Topic::default(),
             offset: LAMT_FIXED_OFFSET
@@ -52,7 +52,7 @@ impl Header {
             vec.push(self.compression_mode.as_ref().unwrap().raw());
         }
         if self.message_flags.encryption() {
-            vec.push(self.encryption_algo.as_ref().unwrap().raw());
+            vec.push(self.encryption_mode.as_ref().unwrap().raw());
         }
         vec.append(&mut self.client_id.raw());
         if self.message_flags.text_topic() {
@@ -126,8 +126,8 @@ impl Header {
     }
 
     #[allow(dead_code)]
-    pub fn set_encryption_algo<'a>(&'a mut self, encryption_algo: EncryptionAlgorithm) -> &'a mut Self {
-        self.encryption_algo = Some(encryption_algo);
+    pub fn set_encryption_algo<'a>(&'a mut self, encryption_mode: EncryptionMode) -> &'a mut Self {
+        self.encryption_mode = Some(encryption_mode);
         self.message_flags.set_encryption(true);
         self
     }
@@ -169,7 +169,7 @@ impl From<&Vec<u8>> for Header {
             delivery_mode: DeliveryMode::from(orig),
             message_flags: MessageFlags::from(orig),
             compression_mode: None,
-            encryption_algo: None,
+            encryption_mode: None,
             client_id: ClientId::default(),
             topic: Topic::default(),
             offset: LAMT_FIXED_OFFSET
@@ -179,7 +179,7 @@ impl From<&Vec<u8>> for Header {
             header.offset += 1;
         }
         if header.message_flags.encryption() {
-            header.encryption_algo = Some(EncryptionAlgorithm::from(orig[header.offset]));
+            header.encryption_mode = Some(EncryptionMode::from(orig[header.offset]));
             header.offset += 1;
         }
         header.client_id = ClientId::from(orig, &mut header);
@@ -196,7 +196,7 @@ impl PartialEq for Header {
         self.delivery_mode == other.delivery_mode &&
         self.message_flags == other.message_flags &&
         self.compression_mode == other.compression_mode &&
-        self.encryption_algo == other.encryption_algo &&
+        self.encryption_mode == other.encryption_mode &&
         self.client_id == other.client_id &&
         self.topic == other.topic
     }
