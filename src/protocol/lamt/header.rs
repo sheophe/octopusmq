@@ -13,7 +13,7 @@ use crate::lamt::{
 
 const LAMT_FIXED_OFFSET: usize = 7;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Header {
     protocol_version: ProtocolVersion,
     transport_mode: TransportMode,
@@ -48,14 +48,14 @@ impl Header {
         vec.append(&mut self.protocol_version.raw());
         vec.push(((self.transport_mode.raw() & 0x3) << 6) | (self.message_type.raw() & 0x3f));
         vec.push(((self.delivery_mode.raw() & 0xf) << 4) | (self.message_flags.raw() & 0xf));
-        if self.message_flags.get_compression() {
+        if self.message_flags.compression() {
             vec.push(self.compression_mode.as_ref().unwrap().raw());
         }
-        if self.message_flags.get_encryption() {
+        if self.message_flags.encryption() {
             vec.push(self.encryption_algo.as_ref().unwrap().raw());
         }
         vec.append(&mut self.client_id.raw());
-        if self.message_flags.get_text_topic() {
+        if self.message_flags.text_topic() {
             vec.append(&mut self.topic.raw_name())
         } else {
             vec.append(&mut self.topic.raw_id())
@@ -63,22 +63,22 @@ impl Header {
         vec
     }
 
-    pub fn get_compression_mode(&self) -> CompressionMode {
+    pub fn compression_mode(&self) -> CompressionMode {
         match self.compression_mode {
             Some(v) => v,
             None => CompressionMode::default()
         }
     }
 
-    pub fn get_offset(&self) -> usize {
+    pub fn offset(&self) -> usize {
         self.offset
     }
 
-    pub fn get_mut_offset<'a>(&'a mut self) -> &'a mut usize {
+    pub fn offset_mut<'a>(&'a mut self) -> &'a mut usize {
         &mut self.offset
     }
 
-    pub fn get_message_flags(&self) -> &MessageFlags {
+    pub fn message_flags(&self) -> &MessageFlags {
         &self.message_flags
     }
 
@@ -104,7 +104,7 @@ impl Header {
 
     pub fn set_compression_mode<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
         self.compression_mode = Some(compression_mode);
-        if compression_mode.get_algorithm() != CompressionAlgorithm::NoCompression {
+        if compression_mode.algorithm() != CompressionAlgorithm::NoCompression {
             self.message_flags.set_compression(true);
         }
         self
@@ -154,11 +154,11 @@ impl From<&Vec<u8>> for Header {
             topic: Topic::default(),
             offset: LAMT_FIXED_OFFSET
         };
-        if header.message_flags.get_compression() {
+        if header.message_flags.compression() {
             header.compression_mode = Some(CompressionMode::from(orig[header.offset]));
             header.offset += 1;
         }
-        if header.message_flags.get_encryption() {
+        if header.message_flags.encryption() {
             header.encryption_algo = Some(EncryptionAlgorithm::from(orig[header.offset]));
             header.offset += 1;
         }

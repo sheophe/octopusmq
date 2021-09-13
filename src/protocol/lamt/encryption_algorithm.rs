@@ -1,5 +1,5 @@
 // CompressionMode is encoded using 8 bits
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub enum EncryptionAlgorithm {
     Unknown = 0x0,
     AesGCM,

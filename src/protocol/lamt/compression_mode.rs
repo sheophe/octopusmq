@@ -1,7 +1,7 @@
 const LAMT_DEFAULT_COMPRESSION: i8 = 6;
 
 // CompressionAlgorithm is encoded using 3 bits, allowing 8 total possible algorithms
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub enum CompressionAlgorithm {
     Deflate = 0x0,
     Gzip,
@@ -27,19 +27,19 @@ impl Default for CompressionAlgorithm {
 impl From<u8> for CompressionAlgorithm {
     fn from(orig: u8) -> Self {
         return match orig {
-            0x1 => Self::Deflate,
-            0x2 => Self::Gzip,
-            0x3 => Self::Bzip2,
-            0x4 => Self::Zlib,
-            0x5 => Self::Zstd,
-            0x6 => Self::Brotli,
+            0x0 => Self::Deflate,
+            0x1 => Self::Gzip,
+            0x2 => Self::Bzip2,
+            0x3 => Self::Zlib,
+            0x4 => Self::Zstd,
+            0x5 => Self::Brotli,
             _ => Self::default()
         };
     }
 }
 
 // CompressionMode is encoded using 8 bits
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct CompressionMode {
     algorithm: CompressionAlgorithm,
     level: i8
@@ -81,14 +81,13 @@ impl CompressionMode {
         (self.algorithm as u8 & 0x07 << 5) | (self.level as u8 & 0x1f)
     }
 
-    pub fn get_algorithm(&self) -> CompressionAlgorithm {
+    pub fn algorithm(&self) -> CompressionAlgorithm {
         self.algorithm
     }
 
-    pub fn get_level(&self) -> i8 {
+    pub fn level(&self) -> i8 {
         self.level
     }
-
 
     fn new_with_algo(algo: CompressionAlgorithm) -> Self {
         Self {

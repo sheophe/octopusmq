@@ -4,7 +4,7 @@ const LAMT_DEFAULT_PROTOCOL_NAME: [u8; 4] = [0x4c, 0x41, 0x4d, 0x54];
 const LAMT_DEFAULT_PROTOCOL_VERSION: u8 = 0x01;
 
 // ProtocolVersion is encoded using 5 bytes
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct ProtocolVersion {
     name: [u8; 4],
     version: u8

@@ -20,11 +20,19 @@ fn main() {
     let mut payload = lamt::Payload::new();
     payload
         .append(&mut vec)
-        .into_compressed(header.get_compression_mode());
+        .into_compressed(header.compression_mode());
 
     // Construct message
     let message = lamt::Message::new(header, Some(payload));
     let message_raw = message.raw();
     println!("message: {:02x?}", &message_raw);
-    println!("message: {} bytes", message_raw.len());
+    println!("message: {} bytes", &message_raw.len());
+
+    // Construct test message
+    let test_message = lamt::Message::from(&message_raw);
+    let test_message_raw = test_message.raw();
+    println!("testage: {:02x?}", &test_message_raw);
+    println!("testage: {} bytes", &test_message_raw.len());
+
+    println!("equal: {}", message == test_message);
 }

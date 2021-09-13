@@ -7,7 +7,7 @@ use uuid::Uuid;
 use crate::lamt::header::Header;
 use crate::protocol::util;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct ClientId(u128);
 
 impl ClientId {
@@ -30,7 +30,7 @@ impl ClientId {
 
     pub fn from(orig: &Vec<u8>, header: &mut Header) -> Self {
         let length = mem::size_of::<u128>();
-        let offset = header.get_mut_offset();
+        let offset = header.offset_mut();
         let id_slice = &orig[*offset..*offset+length];
         let val: u128 = util::slice_as_u128(id_slice);
         *offset += length;

@@ -1,5 +1,5 @@
 // DeliveryMode is encoded using 4 bits, allowing 16 total possible modes
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub enum DeliveryMode {
     Unknown = 0x0,
     PublishAndForget,

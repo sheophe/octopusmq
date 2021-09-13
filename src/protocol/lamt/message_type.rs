@@ -1,5 +1,5 @@
 // MessageType is encoded using 6 bits, allowing 64 total possible types
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub enum MessageType {
     Unknown = 0x0,
     Publish,

@@ -3,7 +3,7 @@ use std::mem;
 use crate::lamt::Header;
 use crate::protocol::util;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Topic {
     name: Vec<u8>,
     id: u32
@@ -26,10 +26,10 @@ impl Topic {
     }
     
     pub fn from(orig: &Vec<u8>, header: &mut Header) -> Self {
-        if header.get_message_flags().get_text_topic() {
-            return Self::named_from(orig, header.get_mut_offset())
+        if header.message_flags().text_topic() {
+            return Self::named_from(orig, header.offset_mut())
         }
-        Self::numbered_from(orig, header.get_mut_offset())
+        Self::numbered_from(orig, header.offset_mut())
     }
 
     pub fn raw_id(&self) -> Vec<u8> {

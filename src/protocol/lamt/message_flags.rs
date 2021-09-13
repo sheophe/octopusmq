@@ -1,4 +1,4 @@
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct MessageFlags {
     compression: bool, 
     encryption: bool,
@@ -50,19 +50,19 @@ impl MessageFlags {
         }
     }
 
-    pub fn get_compression(&self) -> bool {
+    pub fn compression(&self) -> bool {
         self.compression
     }
 
-    pub fn get_encryption(&self) -> bool {
+    pub fn encryption(&self) -> bool {
         self.encryption
     }
 
-    pub fn get_text_topic(&self) -> bool {
+    pub fn text_topic(&self) -> bool {
         self.text_topic
     }
 
-    pub fn get_payload(&self) -> bool {
+    pub fn payload(&self) -> bool {
         self.payload
     }
 

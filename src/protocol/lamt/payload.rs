@@ -12,7 +12,7 @@ use bzip2::read::{BzEncoder, BzDecoder};
 use crate::lamt::{CompressionMode, CompressionAlgorithm};
 use crate::protocol::util;
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq, Eq)]
 pub struct Payload {
     current_part: u8,
     total_parts: u8,
@@ -92,8 +92,8 @@ impl Payload {
     }
 
     fn compress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Vec<u8>, io::Error> {
-        let level = compression_mode.get_level();
-        match compression_mode.get_algorithm() {
+        let level = compression_mode.level();
+        match compression_mode.algorithm() {
             CompressionAlgorithm::Deflate => Self::compress_deflate(vec, level),
             CompressionAlgorithm::Gzip => Self::compress_gzip(vec, level),
             CompressionAlgorithm::Bzip2 => Self::compress_bzip2(vec, level),
@@ -105,7 +105,7 @@ impl Payload {
     }
 
     fn decompress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Vec<u8>, io::Error> {
-        match compression_mode.get_algorithm() {
+        match compression_mode.algorithm() {
             CompressionAlgorithm::Deflate => Self::decompress_deflate(vec),
             CompressionAlgorithm::Gzip => Self::decompress_gzip(vec),
             CompressionAlgorithm::Bzip2 => Self::decompress_bzip2(vec),
