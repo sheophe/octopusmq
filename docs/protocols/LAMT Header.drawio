@@ -41,13 +41,13 @@
                     <mxGeometry x="640" y="-2160" width="320" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="12RVGB_o2W1lxHzozf5x-16" value="Topic Length = TL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#3700CC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="640" y="-2080" width="320" height="80" as="geometry"/>
+                    <mxGeometry x="640" y="-1440" width="320" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="12RVGB_o2W1lxHzozf5x-18" value="Topic&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;TL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;imageHeight=24;arcSize=32;strokeColor=#3700CC;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="640" y="-2000" width="320" height="80" as="geometry"/>
+                    <mxGeometry x="640" y="-1360" width="320" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="21" value="Topic Flag = 1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fontStyle=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="750" y="-1010" width="100" height="20" as="geometry"/>
+                    <mxGeometry x="750" y="-50" width="100" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="34" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="590" y="-2800" width="20" height="560" as="geometry"/>
@@ -62,10 +62,10 @@
                     <mxGeometry x="500" y="-2170" width="80" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="40" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="590" y="-2080" width="20" height="160" as="geometry"/>
+                    <mxGeometry x="590" y="-1440" width="20" height="160" as="geometry"/>
                 </mxCell>
                 <mxCell id="41" value="Topic Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(256 bytes MAX)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="440" y="-2010" width="140" height="20" as="geometry"/>
+                    <mxGeometry x="440" y="-1370" width="140" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="42" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="430" y="-2800" width="20" height="1680" as="geometry"/>
@@ -74,25 +74,25 @@
                     <mxGeometry x="300" y="-1970" width="110" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="44" value="Payload Current Part Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="640" y="-1920" width="320" height="80" as="geometry"/>
+                    <mxGeometry x="640" y="-1280" width="320" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="45" value="Payload Total Parts Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="640" y="-1840" width="320" height="80" as="geometry"/>
+                    <mxGeometry x="640" y="-1200" width="320" height="80" as="geometry"/>
                 </mxCell>
-                <mxCell id="46" value="Payload Part Hash&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="640" y="-1760" width="320" height="320" as="geometry"/>
+                <mxCell id="46" value="Payload Part Hash&lt;br style=&quot;font-size: 13px&quot;&gt;64 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
+                    <mxGeometry x="640" y="-1120" width="320" height="640" as="geometry"/>
                 </mxCell>
                 <mxCell id="12RVGB_o2W1lxHzozf5x-20" value="Payload Part Length = PL&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;32 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="640" y="-1440" width="320" height="320" as="geometry"/>
+                    <mxGeometry x="640" y="-480" width="320" height="320" as="geometry"/>
                 </mxCell>
                 <mxCell id="12RVGB_o2W1lxHzozf5x-22" value="Payload&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;PL*8 bits" style="rounded=1;whiteSpace=wrap;html=1;arcSize=32;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="640" y="-1120" width="320" height="80" as="geometry"/>
+                    <mxGeometry x="640" y="-160" width="320" height="80" as="geometry"/>
                 </mxCell>
                 <mxCell id="47" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="590" y="-1920" width="20" height="800" as="geometry"/>
+                    <mxGeometry x="590" y="-1280" width="20" height="1120" as="geometry"/>
                 </mxCell>
-                <mxCell id="48" value="Payload Fixed Header&lt;br style=&quot;font-size: 13px;&quot;&gt;(10 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
-                    <mxGeometry x="440" y="-1530" width="140" height="20" as="geometry"/>
+                <mxCell id="48" value="Payload Fixed Header&lt;br style=&quot;font-size: 13px&quot;&gt;(14 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="-730" width="140" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="65" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1450" y="-2800" width="20" height="560" as="geometry"/>
@@ -186,6 +186,15 @@
                 </mxCell>
                 <mxCell id="56" value="Payload Current Part Number&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;8 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#006EAF;fillColor=none;strokeWidth=3;fontSize=13;fontColor=#D9D9D9;" parent="1" vertex="1">
                     <mxGeometry x="1500" y="-1760" width="320" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="Client ID&lt;br style=&quot;font-size: 13px&quot;&gt;64 bits" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#3700CC;strokeWidth=3;fontSize=13;fontColor=#ffffff;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="640" y="-2080" width="320" height="640" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;fontSize=13;fontColor=#D9D9D9;" vertex="1" parent="1">
+                    <mxGeometry x="590" y="-2080" width="20" height="640" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="Client ID&lt;br style=&quot;font-size: 13px&quot;&gt;(8 bytes)" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;fontColor=#D9D9D9;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="-1770" width="140" height="20" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

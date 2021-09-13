@@ -3,21 +3,20 @@ use std::convert::TryInto;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::io;
-use std::io::Write;
-use std::io::Read;
+use std::io::{Read, Write};
+use std::time::SystemTime;
 
+use uuid::v1::{Timestamp, Context};
+use uuid::Uuid;
 use flate2::Compression;
-use flate2::write::GzEncoder;
-use flate2::write::ZlibEncoder;
-use flate2::write::DeflateEncoder;
-use flate2::read::GzDecoder;
-use flate2::read::ZlibDecoder;
-use flate2::read::DeflateDecoder;
+use flate2::write::{GzEncoder, ZlibEncoder, DeflateEncoder};
+use flate2::read::{GzDecoder, ZlibDecoder, DeflateDecoder};
 
 const LAMT_DEFAULT_PROTOCOL_NAME: [u8; 4] = [0x4c, 0x41, 0x4d, 0x54];
 const LAMT_EMPTY_PROTOCOL_NAME: [u8; 4] = [0x0, 0x0, 0x0, 0x0];
 const LAMT_DEFAULT_PROTOCOL_VERSION: u8 = 0x01;
 const LAMT_FIXED_OFFSET: usize = 7;
+const LAMT_DEFAULT_COMPRESSION: i8 = 6;
 
 // ProtocolVersion is encoded using 5 bytes
 #[derive(Copy, Clone)]
@@ -277,12 +276,13 @@ impl From<&Vec<u8>> for MessageFlags {
 }
 
 // CompressionAlgorithm is encoded using 3 bits, allowing 8 total possible algorithms
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum CompressionAlgorithm {
     Deflate,
     Gzip,
     Zlib,
     Zstd,
+    Brotli,
     NoCompression = 0x8
 }
 
@@ -305,6 +305,7 @@ impl From<u8> for CompressionAlgorithm {
             0x2 => Self::Gzip,
             0x3 => Self::Zlib,
             0x4 => Self::Zstd,
+            0x5 => Self::Brotli,
             _ => Self::default()
         };
     }
@@ -325,8 +326,35 @@ impl CompressionMode {
         }
     }
 
+    pub fn new_deflate() -> Self {
+        Self::new_with_algo(CompressionAlgorithm::Deflate)
+    }
+
+    pub fn new_gzip() -> Self {
+        Self::new_with_algo(CompressionAlgorithm::Gzip)
+    }
+
+    pub fn new_zlib() -> Self {
+        Self::new_with_algo(CompressionAlgorithm::Zlib)
+    }
+
+    pub fn new_zstd() -> Self {
+        Self::new_with_algo(CompressionAlgorithm::Zstd)
+    }
+
+    pub fn new_brotli() -> Self {
+        Self::new_with_algo(CompressionAlgorithm::Brotli)
+    }
+
     pub fn raw(&self) -> u8 {
         return (self.algorithm as u8 & 0x07 << 5) | (self.level as u8 & 0x1f)
+    }
+
+    fn new_with_algo(algo: CompressionAlgorithm) -> Self {
+        Self {
+            algorithm: algo,
+            level: LAMT_DEFAULT_COMPRESSION
+        }
     }
 }
 
@@ -362,7 +390,7 @@ pub enum EncryptionAlgorithm {
     AesGCM,
     AesCCM,
     AesCBC,
-    Gpg,
+    OpenPGP,
     ChaCha20Poly1305,
 }
 
@@ -384,7 +412,7 @@ impl From<u8> for EncryptionAlgorithm {
             0x1 => Self::AesGCM,
             0x2 => Self::AesCCM,
             0x3 => Self::AesCBC,
-            0x4 => Self::Gpg,
+            0x4 => Self::OpenPGP,
             0x5 => Self::ChaCha20Poly1305,
             _ => Self::default()
         };
@@ -447,6 +475,53 @@ impl Default for Topic {
     }
 }
 
+#[derive(Copy, Clone)]
+pub struct ClientId(u128);
+
+impl ClientId {
+    pub fn new() -> Self {
+        let mac = mac_address::get_mac_address();
+        match mac {
+            Ok(v) => {
+                let context = Context::new(42);
+                let now = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap_or_default();
+                let ts = Timestamp::from_unix(&context, now.as_secs(), now.as_nanos() as u32);
+                let uuid = Uuid::new_v1(ts, &v.unwrap().bytes());
+                match uuid {
+                    Ok(v) => Self(v.as_u128()),
+                    Err(_) => Self(Uuid::new_v4().as_u128())
+                }
+            },
+            Err(_) => Self(Uuid::new_v4().as_u128())
+        }
+    }
+
+    pub fn from(orig: &Vec<u8>, header: &mut Header) -> Self {
+        let length = mem::size_of::<u128>();
+        let offset = &mut header.offset;
+        let id_slice = &orig[*offset..*offset+length];
+        let val: u128 = slice_as_u128(id_slice);
+        *offset += length;
+        Self(val)
+    }
+
+    pub fn raw(&self) -> Vec<u8> {
+        Vec::from(u128_as_slice(self.0))
+    }
+}
+
+impl From<u128> for ClientId {
+    fn from(orig: u128) -> Self {
+        ClientId(orig)
+    }
+}
+
+impl Default for ClientId {
+    fn default() -> Self {
+        ClientId(0)
+    }
+}
+
 #[derive(Clone)]
 pub struct Header {
     protocol_version: ProtocolVersion,
@@ -456,6 +531,7 @@ pub struct Header {
     message_flags: MessageFlags,
     compression_mode: Option<CompressionMode>, 
     encryption_algo: Option<EncryptionAlgorithm>,
+    client_id: ClientId,
     topic: Topic,
     offset: usize
 }
@@ -470,6 +546,7 @@ impl Header {
             message_flags: MessageFlags::default(),
             compression_mode: None,
             encryption_algo: None,
+            client_id: ClientId::default(),
             topic: Topic::default(),
             offset: LAMT_FIXED_OFFSET
         }
@@ -486,6 +563,7 @@ impl Header {
         if self.message_flags.encryption {
             vec.push(self.encryption_algo.as_ref().unwrap().raw());
         }
+        vec.append(&mut self.client_id.raw());
         if self.message_flags.text_topic {
             vec.append(&mut self.topic.raw_name())
         } else {
@@ -523,7 +601,9 @@ impl Header {
 
     pub fn set_compression_mode<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
         self.compression_mode = Some(compression_mode);
-        self.message_flags.compression = true;
+        if compression_mode.algorithm != CompressionAlgorithm::NoCompression {
+            self.message_flags.compression = true;
+        }
         self
     }
 
@@ -559,6 +639,11 @@ impl Header {
         self.message_flags.text_topic = false;
         self
     }
+
+    pub fn set_client_id<'a>(&'a mut self, id: ClientId) -> &'a mut Self {
+        self.client_id = id;
+        self
+    }
 }
 
 impl From<&Vec<u8>> for Header {
@@ -571,6 +656,7 @@ impl From<&Vec<u8>> for Header {
             message_flags: MessageFlags::from(orig),
             compression_mode: None,
             encryption_algo: None,
+            client_id: ClientId::default(),
             topic: Topic::default(),
             offset: LAMT_FIXED_OFFSET
         };
@@ -582,6 +668,7 @@ impl From<&Vec<u8>> for Header {
             header.encryption_algo = Some(EncryptionAlgorithm::from(orig[header.offset]));
             header.offset += 1;
         }
+        header.client_id = ClientId::from(orig, &mut header);
         header.topic = Topic::from(orig, &mut header);
         header
     }
@@ -593,7 +680,9 @@ pub struct Payload {
     total_parts: u8,
     hash: u32,
     length: u32,
-    data: Vec<u8>
+    data: Vec<u8>,
+    compressed: bool,
+    encrypted: bool,
 }
 
 impl Payload {
@@ -603,7 +692,9 @@ impl Payload {
             total_parts: 1,
             hash: 0,
             length: 0,
-            data: Vec::new()
+            data: Vec::new(),
+            compressed: false,
+            encrypted: false
         }
     }
 
@@ -632,6 +723,7 @@ impl Payload {
             Err(_) => self.data.clone()
         };
         self.update_hash_and_length();
+        self.compressed = true;
         self
     }
 
@@ -642,7 +734,16 @@ impl Payload {
             Err(_) => self.data.clone()
         };
         self.update_hash_and_length();
+        self.compressed = false;
         self
+    }
+
+    pub fn is_compressed(&self) -> &bool {
+        &self.compressed
+    }
+
+    pub fn is_encrypted(&self) -> &bool {
+        &self.encrypted
     }
 
     fn update_hash_and_length(&mut self) {
@@ -659,6 +760,7 @@ impl Payload {
             CompressionAlgorithm::Gzip => Self::compress_gzip(vec, level),
             CompressionAlgorithm::Zlib => Self::compress_zlib(vec, level),
             CompressionAlgorithm::Zstd => Self::compress_zstd(vec, level),
+            CompressionAlgorithm::Brotli => Self::compress_brotli(vec, level),
             _ => Err(io::Error::from(io::ErrorKind::InvalidInput))
         }
     }
@@ -669,7 +771,33 @@ impl Payload {
             CompressionAlgorithm::Gzip => Self::decompress_gzip(vec),
             CompressionAlgorithm::Zlib => Self::decompress_zlib(vec),
             CompressionAlgorithm::Zstd => Self::decompress_zstd(vec),
+            CompressionAlgorithm::Brotli => Self::decompress_brotli(vec),
             _ => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn compress_deflate(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        let mut e = DeflateEncoder::new(Vec::new(), Compression::new(level as u32));
+        match e.write_all(vec) {
+            Ok(_) => e.finish(),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+    fn compress_gzip(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        let mut e = GzEncoder::new(Vec::new(), Compression::new(level as u32));
+        match e.write_all(vec) {
+            Ok(_) => e.finish(),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+        }
+    }
+
+
+    fn compress_zlib(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        let mut e = ZlibEncoder::new(Vec::new(), Compression::new(level as u32));
+        match e.write_all(vec) {
+            Ok(_) => e.finish(),
+            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
         }
     }
 
@@ -677,36 +805,18 @@ impl Payload {
         zstd::block::compress(vec, level as i32)
     }
 
-    fn compress_gzip(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
-        let mut e = GzEncoder::new(Vec::new(), Self::flate2_compression(level));
-        match e.write_all(vec) {
-            Ok(_) => e.finish(),
-            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
+    fn compress_brotli(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
+        let mut out: Vec<u8> = Vec::new();
+        let mut params = brotli::enc::BrotliEncoderParams::default();
+        params.quality = level as i32;
+        match brotli::BrotliCompress(&mut vec.clone().as_slice(), &mut out, &params) {
+            Ok(_) => Ok(out),
+            Err(e) => Err(e)
         }
     }
 
-    fn compress_deflate(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
-        let mut e = DeflateEncoder::new(Vec::new(), Self::flate2_compression(level));
-        match e.write_all(vec) {
-            Ok(_) => e.finish(),
-            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
-        }
-    }
-
-    fn compress_zlib(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, io::Error> {
-        let mut e = ZlibEncoder::new(Vec::new(), Self::flate2_compression(level));
-        match e.write_all(vec) {
-            Ok(_) => e.finish(),
-            Err(_) => Err(io::Error::from(io::ErrorKind::InvalidInput))
-        }
-    }
-
-    fn decompress_zstd(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
-        zstd::block::decompress(vec,  std::i32::MAX as usize)
-    }
-
-    fn decompress_gzip(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
-        let mut e = GzDecoder::new(&vec[..]);
+    fn decompress_deflate(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        let mut e = DeflateDecoder::new(&vec[..]);
         let mut decoded_vec: Vec<u8> = Vec::new();
         match e.read_to_end(&mut decoded_vec) {
             Ok(_) => Ok(decoded_vec),
@@ -714,8 +824,8 @@ impl Payload {
         }
     }
 
-    fn decompress_deflate(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
-        let mut e = DeflateDecoder::new(&vec[..]);
+    fn decompress_gzip(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        let mut e = GzDecoder::new(&vec[..]);
         let mut decoded_vec: Vec<u8> = Vec::new();
         match e.read_to_end(&mut decoded_vec) {
             Ok(_) => Ok(decoded_vec),
@@ -732,16 +842,17 @@ impl Payload {
         }
     }
 
-    fn flate2_compression(level: i8) -> Compression {
-        match level {
-            0x0 => Compression::none(),
-            0x1 => Compression::fast(),
-            0x2..=0x6 => Compression::default(),
-            x if x >= 0x7 => Compression::best(),
-            _ => Compression::default()
-        }
+    fn decompress_zstd(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        zstd::block::decompress(vec,  std::i32::MAX as usize)
     }
 
+    fn decompress_brotli(vec: &Vec<u8>) -> Result<Vec<u8>, io::Error> {
+        let mut out: Vec<u8> = Vec::new();
+        match brotli::BrotliDecompress(&mut vec.clone().as_slice(), &mut out) {
+            Ok(_) => Ok(out),
+            Err(e) => Err(e)
+        }
+    }
 }
 
 impl From<&Vec<u8>> for Payload {
@@ -751,7 +862,9 @@ impl From<&Vec<u8>> for Payload {
             total_parts: orig[1],
             hash: slice_as_u32(&orig[2..6]),
             length: slice_as_u32(&orig[6..10]),
-            data: Vec::from(&orig[10..])
+            data: Vec::from(&orig[10..]),
+            compressed: false,
+            encrypted: false
         }
     }
 }
@@ -795,14 +908,54 @@ impl From<&Vec<u8>> for Message {
 }
 
 fn slice_as_u32(array: &[u8]) -> u32 {
-    ((array[0] as u32) << 24) +
-    ((array[1] as u32) << 16) +
-    ((array[2] as u32) <<  8) +
-    ((array[3] as u32) <<  0)
+    (u32::from(array[0]) << 24) +
+    (u32::from(array[1]) << 16) +
+    (u32::from(array[2]) <<  8) +
+    (u32::from(array[3]) <<  0)
 }
 
 fn u32_as_slice(val: u32) -> [u8; 4] {
     [
+        (val >> 24) as u8,
+        (val >> 16) as u8,
+        (val >> 8) as u8,
+        (val >> 0) as u8
+    ]
+}
+
+fn slice_as_u128(array: &[u8]) -> u128 {
+    (u128::from(array[0]) << 120) +
+    (u128::from(array[1]) << 112) +
+    (u128::from(array[2]) << 104) +
+    (u128::from(array[3]) << 96) +
+    (u128::from(array[4]) << 88) +
+    (u128::from(array[5]) << 80) +
+    (u128::from(array[6]) << 72) +
+    (u128::from(array[7]) << 64) +
+    (u128::from(array[8]) << 56) +
+    (u128::from(array[9]) << 48) +
+    (u128::from(array[10]) << 40) +
+    (u128::from(array[11]) << 32) +
+    (u128::from(array[12]) << 24) +
+    (u128::from(array[13]) << 16) +
+    (u128::from(array[14]) << 8) +
+    (u128::from(array[15]) << 0)
+}
+
+fn u128_as_slice(val: u128) -> [u8; 16] {
+    [
+        (val >> 120) as u8,
+        (val >> 112) as u8,
+        (val >> 104) as u8,
+        (val >> 96) as u8,
+        (val >> 88) as u8,
+        (val >> 80) as u8,
+        (val >> 72) as u8,
+        (val >> 64) as u8,
+        (val >> 56) as u8,
+        (val >> 48) as u8,
+        (val >> 40) as u8,
+        (val >> 32) as u8,
         (val >> 24) as u8,
         (val >> 16) as u8,
         (val >> 8) as u8,
