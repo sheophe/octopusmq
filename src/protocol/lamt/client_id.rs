@@ -5,7 +5,7 @@ use uuid::v1::{Timestamp, Context};
 use uuid::Uuid;
 
 use crate::lamt::header::Header;
-use crate::lamt::util;
+use crate::protocol::util;
 
 #[derive(Copy, Clone)]
 pub struct ClientId(u128);

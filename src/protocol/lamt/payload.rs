@@ -9,8 +9,8 @@ use flate2::write::{GzEncoder, ZlibEncoder, DeflateEncoder};
 use flate2::read::{GzDecoder, ZlibDecoder, DeflateDecoder};
 use bzip2::read::{BzEncoder, BzDecoder};
 
-use crate::lamt::util;
 use crate::lamt::{CompressionMode, CompressionAlgorithm};
+use crate::protocol::util;
 
 #[derive(Clone)]
 pub struct Payload {

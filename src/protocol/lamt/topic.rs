@@ -1,7 +1,7 @@
 use std::mem;
 
 use crate::lamt::Header;
-use crate::lamt::util;
+use crate::protocol::util;
 
 #[derive(Clone)]
 pub struct Topic {
