@@ -19,7 +19,8 @@ fn main() {
     let mut vec: Vec<u8> = Vec::from([0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]);
     let mut payload = lamt::Payload::new();
     payload
-        .append(&mut vec);
+        .append(&mut vec)
+        .into_compressed(header.get_compression_mode());
 
     // Construct message
     let message = lamt::Message::new(header, Some(payload));
