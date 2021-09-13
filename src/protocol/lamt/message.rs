@@ -7,7 +7,8 @@ pub struct Message {
 }
 
 impl Message {
-    pub fn new(header: Header, payload: Option<Payload>) -> Self {
+    pub fn new(header: Header, mut payload: Option<Payload>) -> Self {
+        Self::compress(&header, &mut payload);
         Self {
             header: header,
             payload: payload
@@ -30,13 +31,40 @@ impl Message {
     pub fn payload(&self) -> &Option<Payload> {
         &self.payload
     }
+
+    pub fn decoded_data(&self) -> Vec<u8> {
+        match &self.payload {
+            Some(v) => {
+                if v.compressed() {
+                    v.clone().into_decompressed(self.header().compression_mode()).data().to_vec()
+                } else {
+                    v.data().to_vec()
+                }
+            },
+            None => Vec::new()
+        }
+    }
+
+    fn compress(header: &Header, payload: &mut Option<Payload>) {
+        match payload {
+            Some(v) => if header.message_flags().compression() && !v.compressed() {
+                v.into_compressed(header.compression_mode());
+            },
+            None => return
+        }
+
+    }
 }
 
 impl From<&Vec<u8>> for Message {
     fn from(orig: &Vec<u8>) -> Self {
         let header = Header::from(orig);
         let payload = if header.message_flags().payload() {
-            Some(Payload::from(&Vec::from(&orig[header.offset()..])))
+            let mut orig_payload = Payload::from(&Vec::from(&orig[header.offset()..]));
+            orig_payload
+                .set_compressed(header.message_flags().compression())
+                .set_encrypted(header.message_flags().encryption());
+            Some(orig_payload)
         } else {
             None
         };

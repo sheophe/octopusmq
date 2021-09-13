@@ -13,7 +13,7 @@ use crate::lamt::{
 
 const LAMT_FIXED_OFFSET: usize = 7;
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, Eq)]
 pub struct Header {
     protocol_version: ProtocolVersion,
     transport_mode: TransportMode,
@@ -68,6 +68,14 @@ impl Header {
             Some(v) => v,
             None => CompressionMode::default()
         }
+    }
+
+    pub fn transport_mode(&self) -> &TransportMode {
+        &self.transport_mode
+    }
+
+    pub fn message_type(&self) -> &MessageType {
+        &self.message_type()
     }
 
     pub fn offset(&self) -> usize {
@@ -165,5 +173,19 @@ impl From<&Vec<u8>> for Header {
         header.client_id = ClientId::from(orig, &mut header);
         header.topic = Topic::from(orig, &mut header);
         header
+    }
+}
+
+impl PartialEq for Header {
+    fn eq(&self, other: &Self) -> bool {
+        self.protocol_version == other.protocol_version &&
+        self.transport_mode == other.transport_mode &&
+        self.message_type == other.message_type &&
+        self.delivery_mode == other.delivery_mode &&
+        self.message_flags == other.message_flags &&
+        self.compression_mode == other.compression_mode &&
+        self.encryption_algo == other.encryption_algo &&
+        self.client_id == other.client_id &&
+        self.topic == other.topic
     }
 }

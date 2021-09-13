@@ -2,8 +2,6 @@ mod protocol;
 use protocol::lamt as lamt;
 
 fn main() {
-    println!("hello, octopusmq user or admin or whoever you are...");
-
     // Build header
     let mut header = lamt::Header::new();
     header
@@ -19,8 +17,7 @@ fn main() {
     let mut vec: Vec<u8> = Vec::from([0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08]);
     let mut payload = lamt::Payload::new();
     payload
-        .append(&mut vec)
-        .into_compressed(header.compression_mode());
+        .append(&mut vec);
 
     // Construct message
     let message = lamt::Message::new(header, Some(payload));
@@ -34,5 +31,7 @@ fn main() {
     println!("testage: {:02x?}", &test_message_raw);
     println!("testage: {} bytes", &test_message_raw.len());
 
-    println!("equal: {}", message == test_message);
+    println!("messages equal: {}", message == test_message);
+    println!("decoded payload: {:?}", message.decoded_data());
+
 }

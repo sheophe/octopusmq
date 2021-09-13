@@ -78,7 +78,7 @@ impl CompressionMode {
     }
 
     pub fn raw(&self) -> u8 {
-        (self.algorithm as u8 & 0x07 << 5) | (self.level as u8 & 0x1f)
+        ((self.algorithm as u8 & 0x07) << 5) | (self.level as u8 & 0x1f)
     }
 
     pub fn algorithm(&self) -> CompressionAlgorithm {
@@ -109,7 +109,7 @@ impl Default for CompressionMode {
 impl From<u8> for CompressionMode {
     fn from(orig: u8) -> Self {
         Self {
-            algorithm: CompressionAlgorithm::from((orig & 0xe0) >> 5),
+            algorithm: CompressionAlgorithm::from((orig >> 5) & 0x07),
             level: (orig & 0x1f) as i8
         }
     }

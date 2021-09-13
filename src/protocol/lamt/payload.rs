@@ -76,12 +76,26 @@ impl Payload {
         self
     }
 
-    pub fn is_compressed(&self) -> &bool {
-        &self.compressed
+    pub fn compressed(&self) -> bool {
+        self.compressed
     }
 
-    pub fn is_encrypted(&self) -> &bool {
-        &self.encrypted
+    pub fn encrypted(&self) -> bool {
+        self.encrypted
+    }
+
+    pub fn data(&self) -> &Vec<u8> {
+        &self.data
+    }
+
+    pub fn set_compressed<'a>(&'a mut self, compressed: bool) -> &'a mut Self {
+        self.compressed = compressed;
+        self
+    }
+
+    pub fn set_encrypted<'a>(&'a mut self, encrypted: bool)  -> &'a mut Self {
+        self.encrypted = encrypted;
+        self
     }
 
     fn update_hash_and_length(&mut self) {
