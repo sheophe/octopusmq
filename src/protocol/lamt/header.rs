@@ -70,12 +70,14 @@ impl Header {
         }
     }
 
+    #[allow(dead_code)]
     pub fn transport_mode(&self) -> &TransportMode {
         &self.transport_mode
     }
 
+    #[allow(dead_code)]
     pub fn message_type(&self) -> &MessageType {
-        &self.message_type()
+        &self.message_type
     }
 
     pub fn offset(&self) -> usize {
@@ -90,26 +92,31 @@ impl Header {
         &self.message_flags
     }
 
+    #[allow(dead_code)]
     pub fn set_transport_mode<'a>(&'a mut self, transport_mode: TransportMode) -> &'a mut Self {
         self.transport_mode = transport_mode;
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_message_type<'a>(&'a mut self, message_type: MessageType) -> &'a mut Self {
         self.message_type = message_type;
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_delivery_mode<'a>(&'a mut self, delivery_mode: DeliveryMode) -> &'a mut Self {
         self.delivery_mode = delivery_mode;
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_message_flags<'a>(&'a mut self, message_flags: MessageFlags) -> &'a mut Self {
         self.message_flags = message_flags;
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_compression_mode<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
         self.compression_mode = Some(compression_mode);
         if compression_mode.algorithm() != CompressionAlgorithm::NoCompression {
@@ -118,30 +125,35 @@ impl Header {
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_encryption_algo<'a>(&'a mut self, encryption_algo: EncryptionAlgorithm) -> &'a mut Self {
         self.encryption_algo = Some(encryption_algo);
         self.message_flags.set_encryption(true);
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_string_topic<'a>(&'a mut self, text_topic: String) -> &'a mut Self {
         self.topic = Topic::new_text(text_topic.into_bytes());
         self.message_flags.set_text_topic(true);
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_vector_topic<'a>(&'a mut self, text_topic: Vec<u8>) -> &'a mut Self {
         self.topic = Topic::new_text(text_topic);
         self.message_flags.set_text_topic(true);
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_numeric_topic<'a>(&'a mut self, numeric_topic: u32) -> &'a mut Self {
         self.topic = Topic::new_numeric(numeric_topic);
         self.message_flags.set_text_topic(false);
         self
     }
 
+    #[allow(dead_code)]
     pub fn set_client_id<'a>(&'a mut self, id: ClientId) -> &'a mut Self {
         self.client_id = id;
         self

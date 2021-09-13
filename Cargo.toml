@@ -12,4 +12,5 @@ flate2 = "1.0"
 bzip2 = "0.4"
 zstd = "0.9"
 brotli = "3.3"
+pgp = "0.7"
 uuid = { version = "0.8", features = ["serde", "v1", "v3", "v4"] }

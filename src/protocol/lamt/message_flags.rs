@@ -14,6 +14,7 @@ impl MessageFlags {
         ((self.payload as u8) << 0)
     }
 
+    #[allow(dead_code)]
     pub fn with_payload() -> Self {
         Self{
             compression: false,
@@ -23,6 +24,7 @@ impl MessageFlags {
         }
     }
 
+    #[allow(dead_code)]
     pub fn with_compression() -> Self {
         Self{
             compression: true,
@@ -32,6 +34,7 @@ impl MessageFlags {
         }
     }
 
+    #[allow(dead_code)]
     pub fn with_encryption() -> Self {
         Self{
             compression: false,
@@ -41,6 +44,7 @@ impl MessageFlags {
         }
     }
 
+    #[allow(dead_code)]
     pub fn with_compression_and_encryption() -> Self {
         Self{
             compression: true,
@@ -66,18 +70,22 @@ impl MessageFlags {
         self.payload
     }
 
+    #[allow(dead_code)]
     pub fn set_compression(&mut self, compression: bool) {
         self.compression = compression
     }
 
+    #[allow(dead_code)]
     pub fn set_encryption(&mut self, encryption: bool) {
         self.encryption = encryption
     }
 
+    #[allow(dead_code)]
     pub fn set_text_topic(&mut self, text_topic: bool) {
         self.text_topic = text_topic
     }
 
+    #[allow(dead_code)]
     pub fn set_payload(&mut self, payload: bool) {
         self.payload = payload
     }

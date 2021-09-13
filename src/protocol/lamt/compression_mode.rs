@@ -2,6 +2,7 @@ const LAMT_DEFAULT_COMPRESSION: i8 = 6;
 
 // CompressionAlgorithm is encoded using 3 bits, allowing 8 total possible algorithms
 #[derive(Copy, Clone, PartialEq, Eq)]
+#[repr(u8)]
 pub enum CompressionAlgorithm {
     Deflate = 0x0,
     Gzip,
@@ -38,47 +39,76 @@ impl From<u8> for CompressionAlgorithm {
     }
 }
 
+// CompressionLevel is encoded using 5 bits
+#[derive(Copy, Clone, PartialEq, Eq)]
+pub struct CompressionLevel(i8);
+
+impl CompressionLevel {
+    pub fn new(level: i8) -> Self {
+        Self(level)
+    }
+
+    pub fn raw(&self) -> u8 {
+        self.0 as u8
+    }
+}
+
+impl Default for CompressionLevel {
+    fn default() -> Self {
+        Self(0)
+    }
+}
+
 // CompressionMode is encoded using 8 bits
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct CompressionMode {
     algorithm: CompressionAlgorithm,
-    level: i8
+    level: CompressionLevel
 }
 
 impl CompressionMode {
-    pub fn new(compression_algorithm: CompressionAlgorithm, compression_level: i8) -> Self {
+    pub fn new(
+        compression_algorithm: CompressionAlgorithm,
+        compression_level: CompressionLevel
+    ) -> Self {
         Self {
             algorithm: compression_algorithm,
             level: compression_level
         }
     }
 
+    #[allow(dead_code)]
     pub fn new_deflate() -> Self {
         Self::new_with_algo(CompressionAlgorithm::Deflate)
     }
 
+    #[allow(dead_code)]
     pub fn new_gzip() -> Self {
         Self::new_with_algo(CompressionAlgorithm::Gzip)
     }
 
+    #[allow(dead_code)]
     pub fn new_bzip2() -> Self {
         Self::new_with_algo(CompressionAlgorithm::Bzip2)
     }
 
+    #[allow(dead_code)]
     pub fn new_zlib() -> Self {
         Self::new_with_algo(CompressionAlgorithm::Zlib)
     }
 
+    #[allow(dead_code)]
     pub fn new_zstd() -> Self {
         Self::new_with_algo(CompressionAlgorithm::Zstd)
     }
 
+    #[allow(dead_code)]
     pub fn new_brotli() -> Self {
         Self::new_with_algo(CompressionAlgorithm::Brotli)
     }
 
     pub fn raw(&self) -> u8 {
-        ((self.algorithm as u8 & 0x07) << 5) | (self.level as u8 & 0x1f)
+        ((self.algorithm.raw() & 0x07) << 5) | (self.level.raw() & 0x1f)
     }
 
     pub fn algorithm(&self) -> CompressionAlgorithm {
@@ -86,13 +116,13 @@ impl CompressionMode {
     }
 
     pub fn level(&self) -> i8 {
-        self.level
+        self.level.0
     }
 
     fn new_with_algo(algo: CompressionAlgorithm) -> Self {
         Self {
             algorithm: algo,
-            level: LAMT_DEFAULT_COMPRESSION
+            level: CompressionLevel::new(LAMT_DEFAULT_COMPRESSION)
         }
     }
 }
@@ -101,7 +131,7 @@ impl Default for CompressionMode {
     fn default() -> Self {
         Self {
             algorithm: CompressionAlgorithm::default(),
-            level: 0
+            level: CompressionLevel::default()
         }
     }
 }
@@ -110,7 +140,7 @@ impl From<u8> for CompressionMode {
     fn from(orig: u8) -> Self {
         Self {
             algorithm: CompressionAlgorithm::from((orig >> 5) & 0x07),
-            level: (orig & 0x1f) as i8
+            level: CompressionLevel::new((orig & 0x1f) as i8)
         }
     }
 }

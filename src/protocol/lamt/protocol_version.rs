@@ -44,4 +44,3 @@ impl From<&Vec<u8>> for ProtocolVersion {
         }
     }
 }
-

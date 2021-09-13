@@ -32,7 +32,7 @@ impl Message {
         &self.payload
     }
 
-    pub fn decoded_data(&self) -> Vec<u8> {
+    pub fn decode(&self) -> Vec<u8> {
         match &self.payload {
             Some(v) => {
                 if v.compressed() {
