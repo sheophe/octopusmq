@@ -9,14 +9,25 @@ pub enum HashAlgorithm {
     Sha256,
     Sha384,
     Sha512,
-    Blake2,
-    Blake3,
+    Blake2b256,
+    Blake2b512,
     Whirpool
 }
 
 impl HashAlgorithm {
     pub fn raw(&self) -> u8 {
         *self as u8
+    }
+
+    pub fn digest_size(&self) -> usize {
+        match self {
+            Self::Sha224 => 0x0e0,
+            Self::Ripemd256 | Self::Sha256 | Self::Blake2b256 => 0x100,
+            Self::Ripemd320 => 0x140,
+            Self::Sha384 => 0x180,
+            Self::Sha512 |  Self::Blake2b512 | Self::Whirpool => 0x200,
+            _ => 0x0
+        }
     }
 }
 
@@ -35,8 +46,8 @@ impl From<u8> for HashAlgorithm {
             0x4 => Self::Sha256,
             0x5 => Self::Sha384,
             0x6 => Self::Sha512,
-            0x7 => Self::Blake2,
-            0x8 => Self::Blake3,
+            0x7 => Self::Blake2b256,
+            0x8 => Self::Blake2b512,
             0x9 => Self::Whirpool,
             _ => Self::default()
         };
@@ -141,15 +152,15 @@ impl EncryptionMode {
         ((self.hash_algo.raw() & 0x0f) << 4) | (self.asym_crypt_algo.raw() & 0x0f)
     }
 
-    pub fn hash_algorithm(&self) -> HashAlgorithm {
+    pub fn hash_algo(&self) -> HashAlgorithm {
         self.hash_algo
     }
 
-    pub fn asym_crypt_algorithm(&self) -> AsymEncryptionAlgorithm {
+    pub fn asym_crypt_algo(&self) -> AsymEncryptionAlgorithm {
         self.asym_crypt_algo
     }
 
-    pub fn sym_crypt_algorithm(&self) -> SymEncryptionAlgorithm {
+    pub fn sym_crypt_algo(&self) -> SymEncryptionAlgorithm {
         self.sym_crypt_algo
     }
 }
