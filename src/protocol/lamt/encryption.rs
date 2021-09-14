@@ -1,4 +1,0 @@
-/*
-Encryption sequence:
-    1. 
-*/

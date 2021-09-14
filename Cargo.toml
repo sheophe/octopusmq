@@ -7,10 +7,12 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-mac_address = "1.1.2"
+mac_address = "1.1"
 flate2 = "1.0"
 bzip2 = "0.4"
 zstd = "0.9"
 brotli = "3.3"
-pgp = "0.7"
+blake2 = "0.9"
+sha2 = "0.9"
+ring = "0.16"
 uuid = { version = "0.8", features = ["serde", "v1", "v3", "v4"] }
