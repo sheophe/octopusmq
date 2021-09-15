@@ -9,9 +9,14 @@ fn main() {
         .set_message_type(lamt::MessageType::Publish)
         .set_delivery_mode(lamt::DeliveryMode::ExactlyOnce)
         .set_message_flags(lamt::MessageFlags::with_payload())
-        .set_compression_mode(lamt::CompressionMode::new(
-            lamt::CompressionAlgorithm::Brotli,
-            lamt::CompressionLevel::new(20)
+        // .set_compression_mode(lamt::CompressionMode::new(
+        //     lamt::CompressionAlgorithm::Bzip2,
+        //     lamt::CompressionLevel::new(20)
+        // ))
+        .set_encryption_mode(lamt::EncryptionMode::new(
+            lamt::HashAlgorithm::Blake2b,
+            lamt::AsymEncryptionAlgorithm::Ecc,
+            lamt::SymEncryptionAlgorithm::Twofish
         ))
         .set_client_id(lamt::ClientId::new())
         .set_numeric_topic(0xabcdef12);

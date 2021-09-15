@@ -9,9 +9,8 @@ pub enum HashAlgorithm {
     Sha256,
     Sha384,
     Sha512,
-    Blake2b256,
-    Blake2b512,
-    Whirpool
+    Blake2b,
+    Whirlpool
 }
 
 impl HashAlgorithm {
@@ -22,10 +21,10 @@ impl HashAlgorithm {
     pub fn digest_size(&self) -> usize {
         match self {
             Self::Sha224 => 0x0e0,
-            Self::Ripemd256 | Self::Sha256 | Self::Blake2b256 => 0x100,
+            Self::Ripemd256 | Self::Sha256 | Self::Blake2b => 0x100,
             Self::Ripemd320 => 0x140,
             Self::Sha384 => 0x180,
-            Self::Sha512 |  Self::Blake2b512 | Self::Whirpool => 0x200,
+            Self::Sha512 | Self::Whirlpool => 0x200,
             _ => 0x0
         }
     }
@@ -46,11 +45,37 @@ impl From<u8> for HashAlgorithm {
             0x4 => Self::Sha256,
             0x5 => Self::Sha384,
             0x6 => Self::Sha512,
-            0x7 => Self::Blake2b256,
-            0x8 => Self::Blake2b512,
-            0x9 => Self::Whirpool,
+            0x7 => Self::Blake2b,
+            0x8 => Self::Whirlpool,
             _ => Self::default()
         };
+    }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+pub struct HashDigest(Vec<u8>);
+
+impl HashDigest {
+    pub fn raw(self) -> Vec<u8> {
+        self.0
+    }
+}
+
+impl Default for HashDigest {
+    fn default() -> Self {
+        Self(Vec::new())
+    }
+}
+
+impl From<Vec<u8>> for HashDigest {
+    fn from(orig: Vec<u8>) -> Self {
+        Self(orig)
+    }
+}
+
+impl From<&[u8]> for HashDigest {
+    fn from(orig: &[u8]) -> Self {
+        Self(Vec::from(orig))
     }
 }
 

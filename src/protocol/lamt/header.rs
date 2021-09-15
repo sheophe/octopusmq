@@ -126,7 +126,7 @@ impl Header {
     }
 
     #[allow(dead_code)]
-    pub fn set_encryption_algo<'a>(&'a mut self, encryption_mode: EncryptionMode) -> &'a mut Self {
+    pub fn set_encryption_mode<'a>(&'a mut self, encryption_mode: EncryptionMode) -> &'a mut Self {
         self.encryption_mode = Some(encryption_mode);
         self.message_flags.set_encryption(true);
         self

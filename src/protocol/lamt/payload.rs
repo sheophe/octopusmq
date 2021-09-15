@@ -1,15 +1,16 @@
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
-use crate::lamt::CompressionMode;
-use crate::lamt::compression;
-use crate::protocol::util;
+use crate::lamt::{CompressionMode, HashAlgorithm};
+use crate::lamt::compression::*;
+use crate::lamt::encryption::*;
+use crate::protocol::util::*;
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct Payload {
     current_part: u8,
     total_parts: u8,
-    hash: u32,
+    hash: u64,
     length: u32,
     data: Vec<u8>,
     compressed: bool,
@@ -35,8 +36,8 @@ impl Payload {
         vec.push(self.total_parts);
         let mut hasher = DefaultHasher::new();
         self.data.hash(&mut hasher);
-        vec.append(&mut Vec::from(util::u32_as_slice(hasher.finish() as u32)));
-        vec.append(&mut Vec::from(util::u32_as_slice(self.length)));
+        vec.append(&mut Vec::from(u64_as_slice(hasher.finish())));
+        vec.append(&mut Vec::from(u32_as_slice(self.length)));
         vec.append(&mut self.data.clone());
         vec
     }
@@ -48,7 +49,7 @@ impl Payload {
     }
 
     pub fn into_compressed<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
-        let compression_result = compression::compress(&self.data, compression_mode);
+        let compression_result = compress(&self.data, compression_mode);
         self.data = match compression_result {
             Ok(v) => v,
             Err(_) => self.data.clone()
@@ -59,7 +60,7 @@ impl Payload {
     }
 
     pub fn into_decompressed<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
-        let decompression_result = compression::decompress(&self.data, compression_mode);
+        let decompression_result = decompress(&self.data, compression_mode);
         self.data = match decompression_result {
             Ok(v) => v,
             Err(_) => self.data.clone()
@@ -95,7 +96,7 @@ impl Payload {
         self.length = self.data.len() as u32;
         let mut hasher = DefaultHasher::new();
         self.data.hash(&mut hasher);
-        self.hash = hasher.finish() as u32;
+        self.hash = hasher.finish();
     }
 }
 
@@ -104,9 +105,9 @@ impl From<&Vec<u8>> for Payload {
         Self {
             current_part: orig[0],
             total_parts: orig[1],
-            hash: util::slice_as_u32(&orig[2..6]),
-            length: util::slice_as_u32(&orig[6..10]),
-            data: Vec::from(&orig[10..]),
+            hash: slice_as_u64(&orig[2..10]),
+            length: slice_as_u32(&orig[10..14]),
+            data: Vec::from(&orig[14..]),
             compressed: false,
             encrypted: false
         }
