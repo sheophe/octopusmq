@@ -10,7 +10,7 @@ pub enum HashAlgorithm {
     Sha384,
     Sha512,
     Blake2b,
-    Whirlpool
+    Whirlpool,
 }
 
 impl HashAlgorithm {
@@ -25,7 +25,7 @@ impl HashAlgorithm {
             Self::Ripemd320 => 0x140,
             Self::Sha384 => 0x180,
             Self::Sha512 | Self::Whirlpool => 0x200,
-            _ => 0x0
+            _ => 0x0,
         }
     }
 }
@@ -47,7 +47,7 @@ impl From<u8> for HashAlgorithm {
             0x6 => Self::Sha512,
             0x7 => Self::Blake2b,
             0x8 => Self::Whirlpool,
-            _ => Self::default()
+            _ => Self::default(),
         };
     }
 }
@@ -85,7 +85,7 @@ impl From<&[u8]> for HashDigest {
 pub enum AsymEncryptionAlgorithm {
     Unknown = 0x0,
     Rsa,
-    Ecc
+    Ecc,
 }
 
 impl AsymEncryptionAlgorithm {
@@ -104,8 +104,8 @@ impl From<u8> for AsymEncryptionAlgorithm {
     fn from(orig: u8) -> Self {
         return match orig {
             0x1 => Self::Rsa,
-            0x3 => Self::Ecc,
-            _ => Self::default()
+            0x2 => Self::Ecc,
+            _ => Self::default(),
         };
     }
 }
@@ -122,7 +122,7 @@ pub enum SymEncryptionAlgorithm {
     Idea,
     Cast5,
     Cast6,
-    Serpent
+    Serpent,
 }
 
 impl SymEncryptionAlgorithm {
@@ -148,7 +148,7 @@ impl From<u8> for SymEncryptionAlgorithm {
             0x6 => Self::Cast5,
             0x7 => Self::Cast6,
             0x8 => Self::Serpent,
-            _ => Self::default()
+            _ => Self::default(),
         };
     }
 }
@@ -157,24 +157,24 @@ impl From<u8> for SymEncryptionAlgorithm {
 pub struct EncryptionMode {
     hash_algo: HashAlgorithm,
     asym_crypt_algo: AsymEncryptionAlgorithm,
-    sym_crypt_algo: SymEncryptionAlgorithm
+    sym_crypt_algo: SymEncryptionAlgorithm,
 }
 
 impl EncryptionMode {
     pub fn new(
         hash_algo: HashAlgorithm,
         asym_crypt_algo: AsymEncryptionAlgorithm,
-        sym_crypt_algo: SymEncryptionAlgorithm
+        sym_crypt_algo: SymEncryptionAlgorithm,
     ) -> Self {
         Self {
             hash_algo: hash_algo,
             asym_crypt_algo: asym_crypt_algo,
-            sym_crypt_algo: sym_crypt_algo
+            sym_crypt_algo: SymEncryptionAlgorithm::default(),
         }
     }
 
     pub fn raw(&self) -> u8 {
-        ((self.hash_algo.raw() & 0x0f) << 4) | (self.asym_crypt_algo.raw() & 0x0f)
+        ((self.hash_algo.raw() << 4) & 0xf0) | (self.asym_crypt_algo.raw() & 0x0f)
     }
 
     pub fn hash_algo(&self) -> HashAlgorithm {
@@ -195,7 +195,7 @@ impl Default for EncryptionMode {
         Self {
             hash_algo: HashAlgorithm::default(),
             asym_crypt_algo: AsymEncryptionAlgorithm::default(),
-            sym_crypt_algo: SymEncryptionAlgorithm::default()
+            sym_crypt_algo: SymEncryptionAlgorithm::default(),
         }
     }
 }
@@ -204,8 +204,8 @@ impl From<u8> for EncryptionMode {
     fn from(orig: u8) -> Self {
         Self {
             hash_algo: HashAlgorithm::from((orig >> 4) & 0x0f),
-            asym_crypt_algo: AsymEncryptionAlgorithm::from(orig & 0x1f),
-            sym_crypt_algo: SymEncryptionAlgorithm::from(orig & 0x1f)
+            asym_crypt_algo: AsymEncryptionAlgorithm::from(orig & 0x0f),
+            sym_crypt_algo: SymEncryptionAlgorithm::default(),
         }
     }
 }

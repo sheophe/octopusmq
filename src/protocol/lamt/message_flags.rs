@@ -1,56 +1,56 @@
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct MessageFlags {
-    compression: bool, 
+    compression: bool,
     encryption: bool,
     text_topic: bool,
-    payload: bool
+    payload: bool,
 }
 
 impl MessageFlags {
     pub fn raw(&self) -> u8 {
-        ((self.compression as u8) << 3) +
-        ((self.encryption as u8) << 2) +
-        ((self.text_topic as u8) << 1) +
-        ((self.payload as u8) << 0)
+        ((self.compression as u8) << 3)
+            + ((self.encryption as u8) << 2)
+            + ((self.text_topic as u8) << 1)
+            + ((self.payload as u8) << 0)
     }
 
     #[allow(dead_code)]
     pub fn with_payload() -> Self {
-        Self{
+        Self {
             compression: false,
             encryption: false,
             text_topic: false,
-            payload: true
+            payload: true,
         }
     }
 
     #[allow(dead_code)]
     pub fn with_compression() -> Self {
-        Self{
+        Self {
             compression: true,
             encryption: false,
             text_topic: false,
-            payload: true
+            payload: true,
         }
     }
 
     #[allow(dead_code)]
     pub fn with_encryption() -> Self {
-        Self{
+        Self {
             compression: false,
             encryption: true,
             text_topic: false,
-            payload: true
+            payload: true,
         }
     }
 
     #[allow(dead_code)]
     pub fn with_compression_and_encryption() -> Self {
-        Self{
+        Self {
             compression: true,
             encryption: true,
             text_topic: false,
-            payload: true
+            payload: true,
         }
     }
 
@@ -97,7 +97,7 @@ impl Default for MessageFlags {
             compression: false,
             encryption: false,
             text_topic: false,
-            payload: false
+            payload: false,
         }
     }
 }
@@ -108,7 +108,7 @@ impl From<u8> for MessageFlags {
             compression: orig & (1 << 3) != 0,
             encryption: orig & (1 << 2) != 0,
             text_topic: orig & (1 << 1) != 0,
-            payload: orig & (1 << 0) != 0
+            payload: orig & (1 << 0) != 0,
         }
     }
 }

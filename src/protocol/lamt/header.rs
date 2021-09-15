@@ -1,14 +1,6 @@
 use crate::lamt::{
-    ProtocolVersion,
-    TransportMode,
-    MessageType,
-    DeliveryMode,
-    MessageFlags,
-    CompressionAlgorithm,
-    CompressionMode,
-    EncryptionMode,
-    ClientId,
-    Topic
+    ClientId, CompressionAlgorithm, CompressionMode, DeliveryMode, EncryptionMode, MessageFlags,
+    MessageType, ProtocolVersion, Topic, TransportMode,
 };
 
 const LAMT_FIXED_OFFSET: usize = 7;
@@ -20,11 +12,11 @@ pub struct Header {
     message_type: MessageType,
     delivery_mode: DeliveryMode,
     message_flags: MessageFlags,
-    compression_mode: Option<CompressionMode>, 
+    compression_mode: Option<CompressionMode>,
     encryption_mode: Option<EncryptionMode>,
     client_id: ClientId,
     topic: Topic,
-    offset: usize
+    offset: usize,
 }
 
 impl Header {
@@ -39,7 +31,7 @@ impl Header {
             encryption_mode: None,
             client_id: ClientId::default(),
             topic: Topic::default(),
-            offset: LAMT_FIXED_OFFSET
+            offset: LAMT_FIXED_OFFSET,
         }
     }
 
@@ -66,7 +58,14 @@ impl Header {
     pub fn compression_mode(&self) -> CompressionMode {
         match self.compression_mode {
             Some(v) => v,
-            None => CompressionMode::default()
+            None => CompressionMode::default(),
+        }
+    }
+
+    pub fn encryption_mode(&self) -> EncryptionMode {
+        match self.encryption_mode {
+            Some(v) => v,
+            None => EncryptionMode::default(),
         }
     }
 
@@ -117,7 +116,10 @@ impl Header {
     }
 
     #[allow(dead_code)]
-    pub fn set_compression_mode<'a>(&'a mut self, compression_mode: CompressionMode) -> &'a mut Self {
+    pub fn set_compression_mode<'a>(
+        &'a mut self,
+        compression_mode: CompressionMode,
+    ) -> &'a mut Self {
         self.compression_mode = Some(compression_mode);
         if compression_mode.algorithm() != CompressionAlgorithm::NoCompression {
             self.message_flags.set_compression(true);
@@ -162,7 +164,7 @@ impl Header {
 
 impl From<&Vec<u8>> for Header {
     fn from(orig: &Vec<u8>) -> Self {
-        let mut header = Self{
+        let mut header = Self {
             protocol_version: ProtocolVersion::from(orig),
             transport_mode: TransportMode::from(orig),
             message_type: MessageType::from(orig),
@@ -172,7 +174,7 @@ impl From<&Vec<u8>> for Header {
             encryption_mode: None,
             client_id: ClientId::default(),
             topic: Topic::default(),
-            offset: LAMT_FIXED_OFFSET
+            offset: LAMT_FIXED_OFFSET,
         };
         if header.message_flags.compression() {
             header.compression_mode = Some(CompressionMode::from(orig[header.offset]));
@@ -190,14 +192,14 @@ impl From<&Vec<u8>> for Header {
 
 impl PartialEq for Header {
     fn eq(&self, other: &Self) -> bool {
-        self.protocol_version == other.protocol_version &&
-        self.transport_mode == other.transport_mode &&
-        self.message_type == other.message_type &&
-        self.delivery_mode == other.delivery_mode &&
-        self.message_flags == other.message_flags &&
-        self.compression_mode == other.compression_mode &&
-        self.encryption_mode == other.encryption_mode &&
-        self.client_id == other.client_id &&
-        self.topic == other.topic
+        self.protocol_version == other.protocol_version
+            && self.transport_mode == other.transport_mode
+            && self.message_type == other.message_type
+            && self.delivery_mode == other.delivery_mode
+            && self.message_flags == other.message_flags
+            && self.compression_mode == other.compression_mode
+            && self.encryption_mode == other.encryption_mode
+            && self.client_id == other.client_id
+            && self.topic == other.topic
     }
 }

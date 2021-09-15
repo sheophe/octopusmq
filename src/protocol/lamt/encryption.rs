@@ -1,11 +1,11 @@
 use std::io::{Error, ErrorKind};
 use std::ops::Deref;
 
+use blake2::Blake2b;
 use digest::Digest;
 use ripemd256::Ripemd256;
 use ripemd320::Ripemd320;
 use sha2::{Sha224, Sha256, Sha384, Sha512};
-use blake2::Blake2b;
 use whirlpool::Whirlpool;
 
 use crate::lamt::encryption_mode::*;
@@ -39,20 +39,16 @@ impl<T: Digest> HasherTrait for Hasher<T> {
     }
 }
 
-pub struct HasherFactory();
-
-impl HasherFactory {
-    pub fn create(algo: HashAlgorithm) -> Result<Box<dyn HasherTrait>, Error> {
-        match algo {
-            HashAlgorithm::Ripemd256 => Ok(Box::new(Hasher::<Ripemd256>::new())),
-            HashAlgorithm::Ripemd320 => Ok(Box::new(Hasher::<Ripemd320>::new())),
-            HashAlgorithm::Sha224 => Ok(Box::new(Hasher::<Sha224>::new())),
-            HashAlgorithm::Sha256 => Ok(Box::new(Hasher::<Sha256>::new())),
-            HashAlgorithm::Sha384 => Ok(Box::new(Hasher::<Sha384>::new())),
-            HashAlgorithm::Sha512 => Ok(Box::new(Hasher::<Sha512>::new())),
-            HashAlgorithm::Blake2b => Ok(Box::new(Hasher::<Blake2b>::new())),
-            HashAlgorithm::Whirlpool => Ok(Box::new(Hasher::<Whirlpool>::new())),
-            _ => Err(Error::from(ErrorKind::InvalidInput))
-        }
+pub fn new_hasher(algo: HashAlgorithm) -> Result<Box<dyn HasherTrait>, Error> {
+    match algo {
+        HashAlgorithm::Ripemd256 => Ok(Box::new(Hasher::<Ripemd256>::new())),
+        HashAlgorithm::Ripemd320 => Ok(Box::new(Hasher::<Ripemd320>::new())),
+        HashAlgorithm::Sha224 => Ok(Box::new(Hasher::<Sha224>::new())),
+        HashAlgorithm::Sha256 => Ok(Box::new(Hasher::<Sha256>::new())),
+        HashAlgorithm::Sha384 => Ok(Box::new(Hasher::<Sha384>::new())),
+        HashAlgorithm::Sha512 => Ok(Box::new(Hasher::<Sha512>::new())),
+        HashAlgorithm::Blake2b => Ok(Box::new(Hasher::<Blake2b>::new())),
+        HashAlgorithm::Whirlpool => Ok(Box::new(Hasher::<Whirlpool>::new())),
+        _ => Err(Error::from(ErrorKind::InvalidInput)),
     }
 }

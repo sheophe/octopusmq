@@ -10,7 +10,7 @@ pub enum CompressionAlgorithm {
     Zlib,
     Zstd,
     Brotli,
-    NoCompression = 0x8
+    NoCompression = 0x8,
 }
 
 impl CompressionAlgorithm {
@@ -34,7 +34,7 @@ impl From<u8> for CompressionAlgorithm {
             0x3 => Self::Zlib,
             0x4 => Self::Zstd,
             0x5 => Self::Brotli,
-            _ => Self::default()
+            _ => Self::default(),
         };
     }
 }
@@ -63,17 +63,17 @@ impl Default for CompressionLevel {
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct CompressionMode {
     algorithm: CompressionAlgorithm,
-    level: CompressionLevel
+    level: CompressionLevel,
 }
 
 impl CompressionMode {
     pub fn new(
         compression_algorithm: CompressionAlgorithm,
-        compression_level: CompressionLevel
+        compression_level: CompressionLevel,
     ) -> Self {
         Self {
             algorithm: compression_algorithm,
-            level: compression_level
+            level: compression_level,
         }
     }
 
@@ -122,7 +122,7 @@ impl CompressionMode {
     fn new_with_algo(algo: CompressionAlgorithm) -> Self {
         Self {
             algorithm: algo,
-            level: CompressionLevel::new(LAMT_DEFAULT_COMPRESSION)
+            level: CompressionLevel::new(LAMT_DEFAULT_COMPRESSION),
         }
     }
 }
@@ -131,7 +131,7 @@ impl Default for CompressionMode {
     fn default() -> Self {
         Self {
             algorithm: CompressionAlgorithm::default(),
-            level: CompressionLevel::default()
+            level: CompressionLevel::default(),
         }
     }
 }
@@ -140,7 +140,7 @@ impl From<u8> for CompressionMode {
     fn from(orig: u8) -> Self {
         Self {
             algorithm: CompressionAlgorithm::from((orig >> 5) & 0x07),
-            level: CompressionLevel::new((orig & 0x1f) as i8)
+            level: CompressionLevel::new((orig & 0x1f) as i8),
         }
     }
 }

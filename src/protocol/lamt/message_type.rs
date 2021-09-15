@@ -4,7 +4,7 @@
 pub enum MessageType {
     Unknown = 0x0,
     Publish,
-    PublishAck,     
+    PublishAck,
     PublishNack,
     PublishStored,
     PublishReleased,
@@ -12,7 +12,7 @@ pub enum MessageType {
     Subscribe,
     SubscribeAck,
     Unsubscribe,
-    UnsubscribeAck
+    UnsubscribeAck,
 }
 
 impl MessageType {

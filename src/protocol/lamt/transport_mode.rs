@@ -4,7 +4,7 @@ pub enum TransportMode {
     Unknown = 0x0,
     Unicast,
     Multicast,
-    Dynamic
+    Dynamic,
 }
 
 impl TransportMode {

@@ -1,9 +1,9 @@
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
-use crate::lamt::{CompressionMode, HashAlgorithm};
 use crate::lamt::compression::*;
 use crate::lamt::encryption::*;
+use crate::lamt::{CompressionMode, EncryptionMode};
 use crate::protocol::util::*;
 
 #[derive(Clone, PartialEq, Eq)]
@@ -26,7 +26,7 @@ impl Payload {
             length: 0,
             data: Vec::new(),
             compressed: false,
-            encrypted: false
+            encrypted: false,
         }
     }
 
@@ -52,7 +52,7 @@ impl Payload {
         let compression_result = compress(&self.data, compression_mode);
         self.data = match compression_result {
             Ok(v) => v,
-            Err(_) => self.data.clone()
+            Err(_) => self.data.clone(),
         };
         self.update_hash_and_length();
         self.compressed = true;
@@ -63,10 +63,20 @@ impl Payload {
         let decompression_result = decompress(&self.data, compression_mode);
         self.data = match decompression_result {
             Ok(v) => v,
-            Err(_) => self.data.clone()
+            Err(_) => self.data.clone(),
         };
         self.update_hash_and_length();
         self.compressed = false;
+        self
+    }
+
+    pub fn into_encrypted<'a>(&'a mut self, encryption_mode: EncryptionMode) -> &'a mut Self {
+        self.encrypted = true;
+        self
+    }
+
+    pub fn into_decrypted<'a>(&'a mut self, encryption_mode: EncryptionMode) -> &'a mut Self {
+        self.encrypted = false;
         self
     }
 
@@ -87,7 +97,7 @@ impl Payload {
         self
     }
 
-    pub fn set_encrypted<'a>(&'a mut self, encrypted: bool)  -> &'a mut Self {
+    pub fn set_encrypted<'a>(&'a mut self, encrypted: bool) -> &'a mut Self {
         self.encrypted = encrypted;
         self
     }
@@ -109,7 +119,7 @@ impl From<&Vec<u8>> for Payload {
             length: slice_as_u32(&orig[10..14]),
             data: Vec::from(&orig[14..]),
             compressed: false,
-            encrypted: false
+            encrypted: false,
         }
     }
 }

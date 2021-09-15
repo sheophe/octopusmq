@@ -7,14 +7,14 @@ const LAMT_DEFAULT_PROTOCOL_VERSION: u8 = 0x01;
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct ProtocolVersion {
     name: [u8; 4],
-    version: u8
+    version: u8,
 }
 
 impl ProtocolVersion {
     pub fn new(version: u8) -> Self {
-        Self{
+        Self {
             name: LAMT_DEFAULT_PROTOCOL_NAME,
-            version: version
+            version: version,
         }
     }
 
@@ -28,9 +28,9 @@ impl ProtocolVersion {
 
 impl Default for ProtocolVersion {
     fn default() -> Self {
-        Self{
+        Self {
             name: LAMT_DEFAULT_PROTOCOL_NAME,
-            version: LAMT_DEFAULT_PROTOCOL_VERSION
+            version: LAMT_DEFAULT_PROTOCOL_VERSION,
         }
     }
 }
@@ -38,9 +38,14 @@ impl Default for ProtocolVersion {
 // ProtocolVersion::from(Vec<u8>) expects full original packet as an argument
 impl From<&Vec<u8>> for ProtocolVersion {
     fn from(orig: &Vec<u8>) -> Self {
-        Self{
-            name: orig.chunks(4).next().unwrap().try_into().unwrap_or_default(),
-            version: orig[4]
+        Self {
+            name: orig
+                .chunks(4)
+                .next()
+                .unwrap()
+                .try_into()
+                .unwrap_or_default(),
+            version: orig[4],
         }
     }
 }

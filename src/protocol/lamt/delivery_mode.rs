@@ -5,7 +5,7 @@ pub enum DeliveryMode {
     Unknown = 0x0,
     PublishAndForget,
     AtLeastOnce,
-    ExactlyOnce
+    ExactlyOnce,
 }
 
 impl DeliveryMode {
