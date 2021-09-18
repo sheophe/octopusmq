@@ -1,0 +1,185 @@
+<mxfile host="65bd71144e">
+    <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+        <mxGraphModel dx="1065" dy="1133" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0"/>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-0" target="n-Y4RBPH3YbitgxxcYgH-1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-0" value="Raw Message" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="220" y="160" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-1" target="n-Y4RBPH3YbitgxxcYgH-3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-1" value="Signature&lt;br&gt;using&lt;br&gt;Sender's Private Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#76608a;strokeColor=#432D57;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="220" y="280" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-3" target="n-Y4RBPH3YbitgxxcYgH-5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-3" value="Asymmetric Encryption&lt;br&gt;using&lt;br&gt;Receiver's Public Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="220" y="400" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-5" target="n-Y4RBPH3YbitgxxcYgH-10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-5" value="Symmetic Encryption&lt;br&gt;using&lt;br&gt;Generated Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3c800;strokeColor=#B09500;fontColor=#000000;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="220" y="520" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-10" value="2x Encrypted Data" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="220" y="720" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-6" target="n-Y4RBPH3YbitgxxcYgH-5" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="500" y="560"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=23;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-6" target="n-Y4RBPH3YbitgxxcYgH-12" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="500" y="600" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-6" value="Generated 256-bit Message Key" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="400" y="480" width="200" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=23;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-12" target="n-Y4RBPH3YbitgxxcYgH-15" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-12" value="Asymmetric Encryption&lt;br&gt;using&lt;br&gt;Receiver's Public Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="420" y="600" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-15" value="Encrypted Session Key" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="420" y="720" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-16" value="+" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=23;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="380" y="748" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-23" target="n-Y4RBPH3YbitgxxcYgH-26" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-23" value="Asymmetric Encryption&lt;br&gt;using&lt;br&gt;Sender's Private Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="320" y="920" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-64" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-26" target="n-Y4RBPH3YbitgxxcYgH-63" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-26" value="Symmetric Encryption&lt;br&gt;using&lt;br&gt;ECDHE Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3c800;strokeColor=#B09500;fontColor=#000000;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="320" y="1040" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=23;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-31" target="n-Y4RBPH3YbitgxxcYgH-26" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="660" y="1080"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-31" value="ECDHE Session Key" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="580" y="1000" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-39" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=23;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-34" target="n-Y4RBPH3YbitgxxcYgH-37" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-34" value="Symmetric Decryption&lt;br&gt;using&lt;br&gt;ECDHE Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3c800;strokeColor=#B09500;fontColor=#000000;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1160" y="280" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=23;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-36" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1320" y="320" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1440" y="320"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-36" value="ECDHE Session Key" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1360" y="240" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-37" target="n-Y4RBPH3YbitgxxcYgH-44" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-37" value="Asymmetric Decryption&lt;br&gt;using&lt;br&gt;Sender Public Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6d8764;strokeColor=#3A5431;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1160" y="400" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-44" value="Split into data and key" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1160" y="520" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-56" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-46" target="n-Y4RBPH3YbitgxxcYgH-53" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1140" y="760" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-46" value="2x Encrypted Data" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1060" y="600" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-47" target="n-Y4RBPH3YbitgxxcYgH-49" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-47" value="Encrypted Session Key" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1260" y="600" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-48" value="+" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=23;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1220" y="628" width="40" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-52" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-49" target="n-Y4RBPH3YbitgxxcYgH-51" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-49" value="Asymmetric Decryption&lt;br&gt;using&lt;br&gt;Receiver's Private Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1260" y="720" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-54" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-51" target="n-Y4RBPH3YbitgxxcYgH-53" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-51" value="Generated 256-bit Message Key" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1280" y="840" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-58" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-53" target="n-Y4RBPH3YbitgxxcYgH-57" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-53" value="Symmetic Decryption&lt;br&gt;using&lt;br&gt;Generated Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e3c800;strokeColor=#B09500;fontColor=#000000;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1060" y="820" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-60" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-57" target="n-Y4RBPH3YbitgxxcYgH-59" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-57" value="Asymmetric Decryption&lt;br&gt;using&lt;br&gt;Receiver's Private Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=#314354;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1060" y="940" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-62" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-59" target="n-Y4RBPH3YbitgxxcYgH-61" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-59" value="Signature Verification&lt;br&gt;using&lt;br&gt;Sender Public Key" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#76608a;strokeColor=#432D57;fontColor=#ffffff;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1060" y="1060" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-61" value="Raw Message" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1060" y="1200" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-63" value="Encrypted Message" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="320" y="1200" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-65" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-66" target="n-Y4RBPH3YbitgxxcYgH-34" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1250.0000000000002" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-66" value="Raw Message" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="1160" y="160" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-69" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="n-Y4RBPH3YbitgxxcYgH-67" target="n-Y4RBPH3YbitgxxcYgH-23" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-67" value="Concatinate data and key" style="rounded=0;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="320" y="840" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-71" value="Encryption" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=32;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry y="40" width="830" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="n-Y4RBPH3YbitgxxcYgH-73" value="Decryption" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=32;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+                    <mxGeometry x="827" y="40" width="823" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

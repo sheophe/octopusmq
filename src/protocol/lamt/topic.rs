@@ -3,7 +3,7 @@ use std::mem;
 use crate::lamt::Header;
 use crate::protocol::util::*;
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Debug)]
 pub struct Topic {
     name: Vec<u8>,
     id: u32,

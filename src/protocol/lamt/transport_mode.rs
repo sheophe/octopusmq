@@ -1,5 +1,5 @@
 // TransportMode is encoded using 2 bits, allowing 4 total possible modes
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 pub enum TransportMode {
     Unknown = 0x0,
     Unicast,

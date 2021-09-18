@@ -1,7 +1,15 @@
-const LAMT_DEFAULT_COMPRESSION: i8 = 6;
+const LAMT_DEFAULT_COMPRESSION: u8 = 6;
 
-// CompressionAlgorithm is encoded using 3 bits, allowing 8 total possible algorithms
-#[derive(Copy, Clone, PartialEq, Eq)]
+/// CompressionAlgorithm is encoded using 3 bits, allowing 8 total possible algorithms.
+///
+/// Supported algorithms with their `u8` representation:
+/// * `0` — DEFLATE,
+/// * `1` — GZ,
+/// * `2` — BZ2,
+/// * `3` — Zlib,
+/// * `4` — Zstandard,
+/// * `5` — brotli
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 #[repr(u8)]
 pub enum CompressionAlgorithm {
     Deflate = 0x0,
@@ -39,17 +47,17 @@ impl From<u8> for CompressionAlgorithm {
     }
 }
 
-// CompressionLevel is encoded using 5 bits
-#[derive(Copy, Clone, PartialEq, Eq)]
-pub struct CompressionLevel(i8);
+/// CompressionLevel is encoded using 5 bits, allowing values in range from 0 to 31
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
+pub struct CompressionLevel(u8);
 
 impl CompressionLevel {
-    pub fn new(level: i8) -> Self {
+    pub fn new(level: u8) -> Self {
         Self(level)
     }
 
     pub fn raw(&self) -> u8 {
-        self.0 as u8
+        self.0
     }
 }
 
@@ -60,7 +68,7 @@ impl Default for CompressionLevel {
 }
 
 // CompressionMode is encoded using 8 bits
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 pub struct CompressionMode {
     algorithm: CompressionAlgorithm,
     level: CompressionLevel,
@@ -115,7 +123,7 @@ impl CompressionMode {
         self.algorithm
     }
 
-    pub fn level(&self) -> i8 {
+    pub fn level(&self) -> u8 {
         self.level.0
     }
 
@@ -140,7 +148,7 @@ impl From<u8> for CompressionMode {
     fn from(orig: u8) -> Self {
         Self {
             algorithm: CompressionAlgorithm::from((orig >> 5) & 0x07),
-            level: CompressionLevel::new((orig & 0x1f) as i8),
+            level: CompressionLevel::new(orig & 0x1f),
         }
     }
 }

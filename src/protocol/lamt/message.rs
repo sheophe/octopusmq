@@ -1,6 +1,6 @@
 use crate::lamt::{Header, Payload};
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Debug)]
 pub struct Message {
     header: Header,
     payload: Option<Payload>,

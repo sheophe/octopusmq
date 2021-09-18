@@ -1,5 +1,5 @@
 // HashAlgorithm is encoded with 4 bits
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 #[repr(u8)]
 pub enum HashAlgorithm {
     Unknown = 0x0,
@@ -80,12 +80,13 @@ impl From<&[u8]> for HashDigest {
 }
 
 // AsymEncryptionAlgorithm is encoded with 4 bits
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 #[repr(u8)]
 pub enum AsymEncryptionAlgorithm {
     Unknown = 0x0,
     Rsa,
-    Ecc,
+    Ecdsa,
+    EdDSA,
 }
 
 impl AsymEncryptionAlgorithm {
@@ -104,14 +105,15 @@ impl From<u8> for AsymEncryptionAlgorithm {
     fn from(orig: u8) -> Self {
         return match orig {
             0x1 => Self::Rsa,
-            0x2 => Self::Ecc,
+            0x2 => Self::Ecdsa,
+            0x3 => Self::EdDSA,
             _ => Self::default(),
         };
     }
 }
 
 // SymEncryptionAlgorithm is encoded with 4 bits
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 #[repr(u8)]
 pub enum SymEncryptionAlgorithm {
     Unknown = 0x0,
@@ -153,7 +155,7 @@ impl From<u8> for SymEncryptionAlgorithm {
     }
 }
 
-#[derive(Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq, Debug)]
 pub struct EncryptionMode {
     hash_algo: HashAlgorithm,
     asym_crypt_algo: AsymEncryptionAlgorithm,

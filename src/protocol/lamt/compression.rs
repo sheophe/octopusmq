@@ -36,7 +36,7 @@ pub fn decompress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Ve
     }
 }
 
-fn compress_deflate(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
+fn compress_deflate(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     let mut e = DeflateEncoder::new(
         Vec::new(),
         Flate2Compression::new(level_range(level, 0, 10) as u32),
@@ -47,7 +47,7 @@ fn compress_deflate(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_gzip(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
+fn compress_gzip(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     let mut e = GzEncoder::new(
         Vec::new(),
         Flate2Compression::new(level_range(level, 0, 10) as u32),
@@ -58,7 +58,7 @@ fn compress_gzip(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_zlib(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
+fn compress_zlib(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     let mut e = ZlibEncoder::new(
         Vec::new(),
         Flate2Compression::new(level_range(level, 0, 10) as u32),
@@ -69,7 +69,7 @@ fn compress_zlib(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_zstd(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
+fn compress_zstd(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     let mut e = ZstdEncoder::new(Vec::new(), level_range(level, 1, 21) as i32).unwrap();
     match e.write_all(vec) {
         Ok(_) => e.finish(),
@@ -77,7 +77,7 @@ fn compress_zstd(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_bzip2(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
+fn compress_bzip2(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     let mut e = BzEncoder::new(
         Vec::new(),
         Bzip2Compression::new(level_range(level, 1, 9) as u32),
@@ -88,7 +88,7 @@ fn compress_bzip2(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_brotli(vec: &Vec<u8>, level: i8) -> Result<Vec<u8>, Error> {
+fn compress_brotli(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     let mut out: Vec<u8> = Vec::new();
     let mut params = brotli::enc::BrotliEncoderParams::default();
     params.quality = level_range(level, 0, 11) as i32;
@@ -154,7 +154,7 @@ fn decompress_brotli(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn level_range(level: i8, min: i8, max: i8) -> i8 {
+fn level_range(level: u8, min: u8, max: u8) -> u8 {
     match level {
         x if x < min => min,
         x if x > max => max,

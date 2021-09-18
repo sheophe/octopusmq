@@ -7,7 +7,6 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-mac_address = "1.1"
 flate2 = "1.0"
 bzip2 = "0.4"
 zstd = "0.9"
@@ -18,7 +17,5 @@ whirlpool = "0.9"
 ripemd256 = "0.1"
 ripemd320 = "0.9"
 digest = "0.9"
-generic-array = "0.14"
-curve25519-dalek = "3.2"
-ed25519-dalek = "1.0"
+ring = "0.16"
 uuid = { version = "0.8", features = ["v1", "v3", "v4"] }

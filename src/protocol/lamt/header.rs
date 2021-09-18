@@ -5,7 +5,7 @@ use crate::lamt::{
 
 const LAMT_FIXED_OFFSET: usize = 7;
 
-#[derive(Clone, Eq)]
+#[derive(Clone, Eq, Debug)]
 pub struct Header {
     protocol_version: ProtocolVersion,
     transport_mode: TransportMode,

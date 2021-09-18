@@ -2,11 +2,10 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
 use crate::lamt::compression::*;
-use crate::lamt::encryption::*;
 use crate::lamt::{CompressionMode, EncryptionMode};
 use crate::protocol::util::*;
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Debug)]
 pub struct Payload {
     current_part: u8,
     total_parts: u8,
