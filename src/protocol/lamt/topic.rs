@@ -11,7 +11,7 @@ pub struct Topic {
 
 impl Topic {
     pub fn new(name: Vec<u8>, id: u32) -> Self {
-        Self { name: name, id: id }
+        Self { name, id }
     }
 
     pub fn new_text(name: Vec<u8>) -> Self {
@@ -22,7 +22,7 @@ impl Topic {
         Self::new(Vec::new(), id)
     }
 
-    pub fn from(orig: &Vec<u8>, header: &mut Header) -> Self {
+    pub fn from(orig: &[u8], header: &mut Header) -> Self {
         if header.message_flags().text_topic() {
             return Self::named_from(orig, header.offset_mut());
         }
@@ -40,7 +40,7 @@ impl Topic {
         vec
     }
 
-    fn named_from(orig: &Vec<u8>, offset: &mut usize) -> Self {
+    fn named_from(orig: &[u8], offset: &mut usize) -> Self {
         let length = orig[*offset] as usize;
         *offset += mem::size_of::<u8>();
         let topic = Self {
@@ -51,7 +51,7 @@ impl Topic {
         topic
     }
 
-    fn numbered_from(orig: &Vec<u8>, offset: &mut usize) -> Self {
+    fn numbered_from(orig: &[u8], offset: &mut usize) -> Self {
         let length = mem::size_of::<u32>();
         let id_slice = &orig[*offset..*offset + length];
         *offset += length;

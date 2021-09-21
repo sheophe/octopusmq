@@ -53,27 +53,27 @@ impl From<u8> for HashAlgorithm {
 }
 
 #[derive(Clone, PartialEq, Eq)]
-pub struct HashDigest(Vec<u8>);
+pub struct Hash(Vec<u8>);
 
-impl HashDigest {
+impl Hash {
     pub fn raw(self) -> Vec<u8> {
         self.0
     }
 }
 
-impl Default for HashDigest {
+impl Default for Hash {
     fn default() -> Self {
         Self(Vec::new())
     }
 }
 
-impl From<Vec<u8>> for HashDigest {
+impl From<Vec<u8>> for Hash {
     fn from(orig: Vec<u8>) -> Self {
         Self(orig)
     }
 }
 
-impl From<&[u8]> for HashDigest {
+impl From<&[u8]> for Hash {
     fn from(orig: &[u8]) -> Self {
         Self(Vec::from(orig))
     }
@@ -103,12 +103,12 @@ impl Default for AsymEncryptionAlgorithm {
 
 impl From<u8> for AsymEncryptionAlgorithm {
     fn from(orig: u8) -> Self {
-        return match orig {
+        match orig {
             0x1 => Self::Rsa,
             0x2 => Self::Ecdsa,
             0x3 => Self::EdDSA,
             _ => Self::default(),
-        };
+        }
     }
 }
 
@@ -141,7 +141,7 @@ impl Default for SymEncryptionAlgorithm {
 
 impl From<u8> for SymEncryptionAlgorithm {
     fn from(orig: u8) -> Self {
-        return match orig {
+        match orig {
             0x1 => Self::Aes,
             0x2 => Self::Blowfish,
             0x3 => Self::Twofish,
@@ -151,7 +151,7 @@ impl From<u8> for SymEncryptionAlgorithm {
             0x7 => Self::Cast6,
             0x8 => Self::Serpent,
             _ => Self::default(),
-        };
+        }
     }
 }
 
@@ -169,9 +169,9 @@ impl EncryptionMode {
         sym_crypt_algo: SymEncryptionAlgorithm,
     ) -> Self {
         Self {
-            hash_algo: hash_algo,
-            asym_crypt_algo: asym_crypt_algo,
-            sym_crypt_algo: SymEncryptionAlgorithm::default(),
+            hash_algo,
+            asym_crypt_algo,
+            sym_crypt_algo,
         }
     }
 

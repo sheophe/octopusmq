@@ -13,7 +13,7 @@ impl ClientId {
         Self(Uuid::new_v4().as_u128())
     }
 
-    pub fn from(orig: &Vec<u8>, header: &mut Header) -> Self {
+    pub fn from(orig: &[u8], header: &mut Header) -> Self {
         let length = mem::size_of::<u128>();
         let offset = header.offset_mut();
         let id_slice = &orig[*offset..*offset + length];

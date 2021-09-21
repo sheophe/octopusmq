@@ -22,17 +22,17 @@ impl Default for TransportMode {
 impl From<u8> for TransportMode {
     fn from(orig: u8) -> Self {
         match orig {
-            0x1 => return Self::Unicast,
-            0x2 => return Self::Multicast,
-            0x3 => return Self::Dynamic,
-            _ => return Self::default(),
-        };
+            0x1 => Self::Unicast,
+            0x2 => Self::Multicast,
+            0x3 => Self::Dynamic,
+            _ => Self::default(),
+        }
     }
 }
 
 // TransportMode::from(Vec<u8>) expects full original packet as an argument
-impl From<&Vec<u8>> for TransportMode {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for TransportMode {
+    fn from(orig: &[u8]) -> Self {
         Self::from((orig[5] & 0xc0) >> 6)
     }
 }

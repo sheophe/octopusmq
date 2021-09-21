@@ -162,8 +162,8 @@ impl Header {
     }
 }
 
-impl From<&Vec<u8>> for Header {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for Header {
+    fn from(orig: &[u8]) -> Self {
         let mut header = Self {
             protocol_version: ProtocolVersion::from(orig),
             transport_mode: TransportMode::from(orig),

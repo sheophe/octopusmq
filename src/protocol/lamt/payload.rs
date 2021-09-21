@@ -109,8 +109,8 @@ impl Payload {
     }
 }
 
-impl From<&Vec<u8>> for Payload {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for Payload {
+    fn from(orig: &[u8]) -> Self {
         Self {
             current_part: orig[0],
             total_parts: orig[1],

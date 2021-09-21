@@ -35,7 +35,7 @@ impl Default for CompressionAlgorithm {
 
 impl From<u8> for CompressionAlgorithm {
     fn from(orig: u8) -> Self {
-        return match orig {
+        match orig {
             0x0 => Self::Deflate,
             0x1 => Self::Gzip,
             0x2 => Self::Bzip2,
@@ -43,7 +43,7 @@ impl From<u8> for CompressionAlgorithm {
             0x4 => Self::Zstd,
             0x5 => Self::Brotli,
             _ => Self::default(),
-        };
+        }
     }
 }
 
@@ -154,8 +154,8 @@ impl From<u8> for CompressionMode {
 }
 
 // CompressionMode::from(Vec<u8>) expects full original packet as an argument
-impl From<&Vec<u8>> for CompressionMode {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for CompressionMode {
+    fn from(orig: &[u8]) -> Self {
         Self::from(orig[7])
     }
 }

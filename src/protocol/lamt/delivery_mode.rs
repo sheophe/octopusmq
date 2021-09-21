@@ -32,8 +32,8 @@ impl From<u8> for DeliveryMode {
 }
 
 // DeliveryMode::from(Vec<u8>) expects full original packet as an argument
-impl From<&Vec<u8>> for DeliveryMode {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for DeliveryMode {
+    fn from(orig: &[u8]) -> Self {
         // DeliveryMode is located at the first 4 bits of 7-th byte of Header
         Self::from((orig[6] & 0xf0) >> 4)
     }

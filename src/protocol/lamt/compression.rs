@@ -11,7 +11,7 @@ use zstd::Encoder as ZstdEncoder;
 
 use crate::lamt::{CompressionAlgorithm, CompressionMode};
 
-pub fn compress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Vec<u8>, Error> {
+pub fn compress(vec: &[u8], compression_mode: CompressionMode) -> Result<Vec<u8>, Error> {
     let level = compression_mode.level();
     match compression_mode.algorithm() {
         CompressionAlgorithm::Deflate => compress_deflate(vec, level),
@@ -24,7 +24,7 @@ pub fn compress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Vec<
     }
 }
 
-pub fn decompress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Vec<u8>, Error> {
+pub fn decompress(vec: &[u8], compression_mode: CompressionMode) -> Result<Vec<u8>, Error> {
     match compression_mode.algorithm() {
         CompressionAlgorithm::Deflate => decompress_deflate(vec),
         CompressionAlgorithm::Gzip => decompress_gzip(vec),
@@ -36,7 +36,7 @@ pub fn decompress(vec: &Vec<u8>, compression_mode: CompressionMode) -> Result<Ve
     }
 }
 
-fn compress_deflate(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
+fn compress_deflate(vec: &[u8], level: u8) -> Result<Vec<u8>, Error> {
     let mut e = DeflateEncoder::new(
         Vec::new(),
         Flate2Compression::new(level_range(level, 0, 10) as u32),
@@ -47,7 +47,7 @@ fn compress_deflate(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_gzip(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
+fn compress_gzip(vec: &[u8], level: u8) -> Result<Vec<u8>, Error> {
     let mut e = GzEncoder::new(
         Vec::new(),
         Flate2Compression::new(level_range(level, 0, 10) as u32),
@@ -58,7 +58,7 @@ fn compress_gzip(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_zlib(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
+fn compress_zlib(vec: &[u8], level: u8) -> Result<Vec<u8>, Error> {
     let mut e = ZlibEncoder::new(
         Vec::new(),
         Flate2Compression::new(level_range(level, 0, 10) as u32),
@@ -69,7 +69,7 @@ fn compress_zlib(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_zstd(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
+fn compress_zstd(vec: &[u8], level: u8) -> Result<Vec<u8>, Error> {
     let mut e = ZstdEncoder::new(Vec::new(), level_range(level, 1, 21) as i32).unwrap();
     match e.write_all(vec) {
         Ok(_) => e.finish(),
@@ -77,7 +77,7 @@ fn compress_zstd(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_bzip2(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
+fn compress_bzip2(vec: &[u8], level: u8) -> Result<Vec<u8>, Error> {
     let mut e = BzEncoder::new(
         Vec::new(),
         Bzip2Compression::new(level_range(level, 1, 9) as u32),
@@ -88,18 +88,20 @@ fn compress_bzip2(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn compress_brotli(vec: &Vec<u8>, level: u8) -> Result<Vec<u8>, Error> {
+fn compress_brotli(mut vec: &[u8], level: u8) -> Result<Vec<u8>, Error> {
     let mut out: Vec<u8> = Vec::new();
-    let mut params = brotli::enc::BrotliEncoderParams::default();
-    params.quality = level_range(level, 0, 11) as i32;
-    match brotli::BrotliCompress(&mut vec.clone().as_slice(), &mut out, &params) {
+    let params = brotli::enc::BrotliEncoderParams {
+        quality: level_range(level, 0, 11) as i32,
+        ..Default::default()
+    };
+    match brotli::BrotliCompress(&mut vec, &mut out, &params) {
         Ok(_) => Ok(out),
         Err(e) => Err(e),
     }
 }
 
-fn decompress_deflate(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
-    let mut e = DeflateDecoder::new(&vec[..]);
+fn decompress_deflate(vec: &[u8]) -> Result<Vec<u8>, Error> {
+    let mut e = DeflateDecoder::new(vec);
     let mut decoded_vec: Vec<u8> = Vec::new();
     match e.read_to_end(&mut decoded_vec) {
         Ok(_) => Ok(decoded_vec),
@@ -107,8 +109,8 @@ fn decompress_deflate(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn decompress_gzip(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
-    let mut e = GzDecoder::new(&vec[..]);
+fn decompress_gzip(vec: &[u8]) -> Result<Vec<u8>, Error> {
+    let mut e = GzDecoder::new(vec);
     let mut decoded_vec: Vec<u8> = Vec::new();
     match e.read_to_end(&mut decoded_vec) {
         Ok(_) => Ok(decoded_vec),
@@ -116,8 +118,8 @@ fn decompress_gzip(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn decompress_bzip2(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
-    let mut e = BzDecoder::new(&vec[..]);
+fn decompress_bzip2(vec: &[u8]) -> Result<Vec<u8>, Error> {
+    let mut e = BzDecoder::new(vec);
     let mut decoded_vec: Vec<u8> = Vec::new();
     match e.read_to_end(&mut decoded_vec) {
         Ok(_) => Ok(decoded_vec),
@@ -125,8 +127,8 @@ fn decompress_bzip2(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn decompress_zlib(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
-    let mut e = ZlibDecoder::new(&vec[..]);
+fn decompress_zlib(vec: &[u8]) -> Result<Vec<u8>, Error> {
+    let mut e = ZlibDecoder::new(vec);
     let mut decoded_vec: Vec<u8> = Vec::new();
     match e.read_to_end(&mut decoded_vec) {
         Ok(_) => Ok(decoded_vec),
@@ -134,8 +136,8 @@ fn decompress_zlib(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn decompress_zstd(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
-    let decoder = ZstdDecoder::new(&vec[..]);
+fn decompress_zstd(vec: &[u8]) -> Result<Vec<u8>, Error> {
+    let decoder = ZstdDecoder::new(vec);
     let mut decoded_vec: Vec<u8> = Vec::new();
     match decoder {
         Ok(mut e) => match e.read_to_end(&mut decoded_vec) {
@@ -146,9 +148,9 @@ fn decompress_zstd(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
     }
 }
 
-fn decompress_brotli(vec: &Vec<u8>) -> Result<Vec<u8>, Error> {
+fn decompress_brotli(mut vec: &[u8]) -> Result<Vec<u8>, Error> {
     let mut out: Vec<u8> = Vec::new();
-    match brotli::BrotliDecompress(&mut vec.clone().as_slice(), &mut out) {
+    match brotli::BrotliDecompress(&mut vec, &mut out) {
         Ok(_) => Ok(out),
         Err(e) => Err(e),
     }

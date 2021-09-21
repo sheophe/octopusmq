@@ -10,10 +10,7 @@ impl Message {
     pub fn new(header: Header, mut payload: Option<Payload>) -> Self {
         Self::encrypt(&header, &mut payload);
         Self::compress(&header, &mut payload);
-        Self {
-            header: header,
-            payload: payload,
-        }
+        Self { header, payload }
     }
 
     pub fn raw(&self) -> Vec<u8> {
@@ -77,11 +74,11 @@ impl Message {
     }
 }
 
-impl From<&Vec<u8>> for Message {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for Message {
+    fn from(orig: &[u8]) -> Self {
         let header = Header::from(orig);
         let payload = if header.message_flags().payload() {
-            let mut orig_payload = Payload::from(&Vec::from(&orig[header.offset()..]));
+            let mut orig_payload = Payload::from(&orig[header.offset()..]);
             orig_payload
                 .set_compressed(header.message_flags().compression())
                 .set_encrypted(header.message_flags().encryption());
@@ -89,9 +86,6 @@ impl From<&Vec<u8>> for Message {
         } else {
             None
         };
-        Self {
-            header: header,
-            payload: payload,
-        }
+        Self { header, payload }
     }
 }

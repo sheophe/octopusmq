@@ -14,7 +14,7 @@ impl ProtocolVersion {
     pub fn new(version: u8) -> Self {
         Self {
             name: LAMT_DEFAULT_PROTOCOL_NAME,
-            version: version,
+            version,
         }
     }
 
@@ -36,8 +36,8 @@ impl Default for ProtocolVersion {
 }
 
 // ProtocolVersion::from(Vec<u8>) expects full original packet as an argument
-impl From<&Vec<u8>> for ProtocolVersion {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for ProtocolVersion {
+    fn from(orig: &[u8]) -> Self {
         Self {
             name: orig
                 .chunks(4)

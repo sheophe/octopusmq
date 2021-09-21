@@ -29,7 +29,7 @@ impl Default for MessageType {
 
 impl From<u8> for MessageType {
     fn from(orig: u8) -> Self {
-        return match orig {
+        match orig {
             0x01 => Self::Publish,
             0x02 => Self::PublishAck,
             0x03 => Self::PublishNack,
@@ -41,13 +41,13 @@ impl From<u8> for MessageType {
             0x09 => Self::Unsubscribe,
             0x0a => Self::UnsubscribeAck,
             _ => Self::default(),
-        };
+        }
     }
 }
 
 // MessageType::from(Vec<u8>) expects full original packet as an argument
-impl From<&Vec<u8>> for MessageType {
-    fn from(orig: &Vec<u8>) -> Self {
+impl From<&[u8]> for MessageType {
+    fn from(orig: &[u8]) -> Self {
         Self::from(orig[5] & 0x3f)
     }
 }
