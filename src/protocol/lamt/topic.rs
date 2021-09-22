@@ -1,7 +1,7 @@
-use std::mem;
+use std::convert::TryInto;
+use std::mem::*;
 
 use crate::lamt::Header;
-use crate::protocol::util::*;
 
 #[derive(Clone, PartialEq, Eq, Debug)]
 pub struct Topic {
@@ -30,19 +30,19 @@ impl Topic {
     }
 
     pub fn raw_id(&self) -> Vec<u8> {
-        Vec::from(u32_as_slice(self.id))
+        Vec::from(self.id.to_be_bytes())
     }
 
     pub fn raw_name(&self) -> Vec<u8> {
         let mut vec: Vec<u8> = Vec::new();
-        vec.append(&mut Vec::from(u32_as_slice(self.name.len() as u32)));
+        vec.append(&mut Vec::from((self.name.len() as u32).to_be_bytes()));
         vec.append(&mut self.name.clone());
         vec
     }
 
     fn named_from(orig: &[u8], offset: &mut usize) -> Self {
         let length = orig[*offset] as usize;
-        *offset += mem::size_of::<u8>();
+        *offset += size_of::<u8>();
         let topic = Self {
             name: Vec::from(&orig[*offset..*offset + length]),
             id: 0,
@@ -52,12 +52,12 @@ impl Topic {
     }
 
     fn numbered_from(orig: &[u8], offset: &mut usize) -> Self {
-        let length = mem::size_of::<u32>();
+        let length = size_of::<u32>();
         let id_slice = &orig[*offset..*offset + length];
         *offset += length;
         Self {
             name: Vec::new(),
-            id: slice_as_u32(id_slice),
+            id: u32::from_be_bytes(id_slice.try_into().unwrap()),
         }
     }
 }

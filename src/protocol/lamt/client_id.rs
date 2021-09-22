@@ -1,9 +1,9 @@
-use std::mem;
+use std::mem::*;
 
+use std::convert::TryInto;
 use uuid::Uuid;
 
 use crate::lamt::header::Header;
-use crate::protocol::util;
 
 #[derive(Copy, Clone, PartialEq, Eq, Debug)]
 pub struct ClientId(u128);
@@ -14,16 +14,16 @@ impl ClientId {
     }
 
     pub fn from(orig: &[u8], header: &mut Header) -> Self {
-        let length = mem::size_of::<u128>();
+        let length = size_of::<u128>();
         let offset = header.offset_mut();
         let id_slice = &orig[*offset..*offset + length];
-        let val: u128 = util::slice_as_u128(id_slice);
+        let val: u128 = u128::from_be_bytes(id_slice.try_into().unwrap());
         *offset += length;
         Self(val)
     }
 
     pub fn raw(&self) -> Vec<u8> {
-        Vec::from(util::u128_as_slice(self.0))
+        Vec::from(self.0.to_be_bytes())
     }
 }
 

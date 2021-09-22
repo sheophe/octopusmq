@@ -1,9 +1,9 @@
 use std::collections::hash_map::DefaultHasher;
+use std::convert::TryInto;
 use std::hash::{Hash, Hasher};
 
 use crate::lamt::compression::*;
 use crate::lamt::{CompressionMode, EncryptionMode};
-use crate::protocol::util::*;
 
 #[derive(Clone, PartialEq, Eq, Debug)]
 pub struct Payload {
@@ -35,8 +35,8 @@ impl Payload {
         vec.push(self.total_parts);
         let mut hasher = DefaultHasher::new();
         self.data.hash(&mut hasher);
-        vec.append(&mut Vec::from(u64_as_slice(hasher.finish())));
-        vec.append(&mut Vec::from(u32_as_slice(self.length)));
+        vec.append(&mut Vec::from(hasher.finish().to_be_bytes()));
+        vec.append(&mut Vec::from(self.length.to_be_bytes()));
         vec.append(&mut self.data.clone());
         vec
     }
@@ -114,8 +114,8 @@ impl From<&[u8]> for Payload {
         Self {
             current_part: orig[0],
             total_parts: orig[1],
-            hash: slice_as_u64(&orig[2..10]),
-            length: slice_as_u32(&orig[10..14]),
+            hash: u64::from_be_bytes(orig[2..10].try_into().unwrap()),
+            length: u32::from_be_bytes(orig[10..14].try_into().unwrap()),
             data: Vec::from(&orig[14..]),
             compressed: false,
             encrypted: false,

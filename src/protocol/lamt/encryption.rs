@@ -8,11 +8,11 @@ use whirlpool::Whirlpool;
 
 use crate::lamt::encryption_mode::*;
 
-// This trait duplicates three functions from digest::Digest,
-// but uses primitive data types for arguments so the dyn trait can be
-// boxed into a return value.
+// This trait is a lightweight version of digest::Digest,
+// but it uses primitive data types for arguments so the dyn trait can be
+// boxed into a return value without specifying the values of associaated types.
 pub trait Digest {
-    fn finalize(self: Box<Self>) -> Hash;
+    fn finalize(self: Self) -> Hash;
     fn update(&mut self, data: &[u8]);
     fn reset(&mut self);
 }
@@ -27,7 +27,7 @@ impl<D: digest::Digest> DigestAdapter<D> {
 }
 
 impl<D: digest::Digest> Digest for DigestAdapter<D> {
-    fn finalize(self: Box<Self>) -> Hash {
+    fn finalize(self: Self) -> Hash {
         Hash::from(self.0.finalize().deref())
     }
 
