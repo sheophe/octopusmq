@@ -52,7 +52,7 @@ impl From<u8> for HashAlgorithm {
     }
 }
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, PartialEq, Eq, Debug)]
 pub struct Hash(Vec<u8>);
 
 impl Hash {

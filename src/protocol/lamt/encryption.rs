@@ -17,7 +17,7 @@ pub trait Digest {
     fn reset(&mut self);
 }
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct DigestAdapter<D: digest::Digest>(D);
 
 impl<D: digest::Digest> DigestAdapter<D> {
@@ -54,37 +54,5 @@ impl Hasher {
             HashAlgorithm::Whirlpool => Box::new(DigestAdapter::<Whirlpool>::new()),
             _ => panic!("unknown algorithm"),
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use ring::signature::*;
-
-    #[test]
-    pub fn ed25519_sign_and_verify() {
-        let input = [
-            0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf,
-        ];
-        let pkcs8_key_pair =
-            Ed25519KeyPair::generate_pkcs8(&ring::rand::SystemRandom::new()).unwrap();
-        let key_pair = Ed25519KeyPair::from_pkcs8(&pkcs8_key_pair.as_ref()).unwrap();
-        let signature = key_pair.sign(input.as_ref());
-        let vec = Vec::from(signature.as_ref());
-        ED25519.verify(key_pair.public_key(), input, signature);
-    }
-
-    #[test]
-    pub fn ecdsa_signature() {
-        let input = [
-            0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf,
-        ];
-        let pkcs8_key_pair = EcdsaKeyPair::generate_pkcs8(
-            &ECDSA_P384_SHA384_FIXED_SIGNING,
-            &ring::rand::SystemRandom::new(),
-        )
-        .unwrap();
-        let key_pair =
-            EcdsaKeyPair::from_pkcs8(&ECDSA_P384_SHA384_FIXED_SIGNING, &pkcs8_key_pair.as_ref());
     }
 }
